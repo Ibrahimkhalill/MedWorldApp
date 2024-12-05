@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      /* Ensure table width is set and columns do not overflow */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        table-layout: fixed; /* Prevents content overflow */
+      }
+
+      th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+        word-break: break-word; /* Forces text to break and wrap within the cell */
+        white-space: normal; /* Ensures wrapping within the cell */
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      /* Adjust column widths */
+      th:nth-child(1), td:nth-child(1) {
+        width: 5%;
+      }
+      th:nth-child(2), td:nth-child(2) {
+        width: 15%;
+      }
+      th:nth-child(3), td:nth-child(3) {
+        width: 20%;
+      }
+      th:nth-child(4), td:nth-child(4) {
+        width: 20%;
+      }
+      th:nth-child(5), td:nth-child(5) {
+        width: 20%;
+      }
+      th:nth-child(6), td:nth-child(6) {
+        width: 10%;
+      }
+      th:nth-child(7), td:nth-child(7) {
+        width: 10%;
+      }
+      th:nth-child(8), td:nth-child(8) {
+        width: 20%;
+      }
+
+      /* Page size settings for PDF */
+      @page {
+        size: A4;
+        margin: 10mm;
+      }
+
+      /* Avoid table breaking across pages */
+      table {
+        page-break-inside: auto;
+      }
+      tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+      }
+
+    </style>
+    <title>Surgery Report</title>
+  </head>
+  <body>
+    <h1>Surgery Data Report</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>User</th>
+          <th>Name of Surgery</th>
+          <th>Type of Surgery</th>
+          <th>Complications</th>
+          <th>Name of Surgery</th>
+          <th>Type of Surgery</th>
+          <th>Complications</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for surgery in surgeries %}
+        <tr>
+          <td>{{ surgery.id }}</td>
+          <td>{{ surgery.user.username }}</td>
+          <td>{{ surgery.name_of_surgery }}</td>
+          <td>{{ surgery.type_of_surgery }}</td>
+          <td>{{ surgery.complications }}</td>
+          <td>{{ surgery.name_of_surgery }}</td>
+          <td>{{ surgery.type_of_surgery }}</td>
+          <td>{{ surgery.complications }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
