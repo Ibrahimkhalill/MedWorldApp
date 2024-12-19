@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure--l%rm*&6sp(j*hn93$dvjd!(jhloy0iq_g@0f^)#433(7wq3a^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["67cb-115-127-156-9.ngrok-free.app"]
+ALLOWED_HOSTS = ["e418-115-127-156-9.ngrok-free.app","127.0.0.1"]
 
 
 # Application definition
@@ -39,18 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mainapp',
     'rest_framework',
-    'rest_framework_simplejwt',
     'rest_framework.authtoken',
-    'background_task'
+    'background_task',
+    'notifications',
+    'subscriptions',
+    'authentications'
+
 ]
 
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ],
 }
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -154,5 +156,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'hijabpoint374@gmail.com'
 EMAIL_HOST_PASSWORD = 'sbog hrdj icpg zodj'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 GOOGLE_SHEET_CREDS_JSON = "729859196271-iaj8ikvst39t6s4vppa5kfme3ohnifo1.apps.googleusercontent.com"

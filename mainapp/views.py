@@ -4,257 +4,33 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.authtoken.models import Token
-from .serializers import UserProfileSerializer, SurgerySerializer  # Your serializers
+from .serializers import *
 from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from .models import UserProfile , Surgery , OTP
+from .models import OTP, PercantageSurgery, Subscription, Surgery, UserProfile
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string 
-from .otpGenarate import generate_otp
+from authentications.otpGenarate import generate_otp
 from django.utils import timezone
-from django.http import HttpResponse, FileResponse
+import django.http
 from openpyxl import Workbook
 from .models import Surgery
 from fpdf import FPDF
+from django.utils.timezone import now
+from datetime import timedelta
 
-# User Registration
-@api_view(["POST"])
-def register(request):
-    if request.method == "POST":
-        email = request.data.get("email")  # Use email as the username
-        password = request.data.get("password")
-        
-        if not email or not password:
-            return Response({"error": "Email and password are required"}, status=status.HTTP_400_BAD_REQUEST)
-     
-        if User.objects.filter(username=email).exists():
-            return Response({"error": "Email already exists"}, status=status.HTTP_400_BAD_REQUEST)
-        
-        user = User.objects.create_user(username=email, email=email, password=password)
-        user.save()
-        
-        UserProfile.objects.create(user=user)
-        
-        return Response({"message": "User created successfully"}, status=status.HTTP_201_CREATED)
-       
+from background_task import background
 
-@api_view(["POST"])
-def send_otp(request):
-    if request.method == 'POST':
-        email = request.data.get('email')
-        try:
-            # Generate OTP
-            otp = generate_otp()
-            # Save OTP to database
-            OTP.objects.create(email=email, otp=otp)
-            
-            # Render the HTML template
-            html_content = render_to_string('otp_email_template.html', {'otp': otp, 'email':email})
-            
-            # Send email
-            msg = EmailMultiAlternatives(
-                subject='Your OTP Code',
-                body='This is an OTP email.',
-                from_email='hijabpoint374@gmail.com',  # Sender's email address
-                to=[email],
-            )
-            msg.attach_alternative(html_content, "text/html")
-            msg.send(fail_silently=False)  
-            
-            return Response({'message': 'OTP sent to your email.'})
-        except Exception as e:
-            return Response({'error': str(e)}, status=500)
-    return Response({'message': 'Invalid method.'})
+from django.core.mail import send_mail
 
-
-@api_view(["POST"])
-def verify_otp(request):
-    if request.method == 'POST':
-        otp = request.data.get('otp')
-
-        try:
-                otp_record = OTP.objects.get(otp=otp)
-                otp_record.attempts += 1  
-                otp_record.save()  
-                if (timezone.now() - otp_record.created_at).seconds > 120:
-                    otp_record.delete()  
-                    return Response({'message': ' Otp Expired'})
-                else:
-                    otp_record.delete()  
-                    return Response('email verified', status=status.HTTP_200_OK)
-        except OTP.DoesNotExist:
-                return Response({'message': 'Invalid Otp'}, status=status.HTTP_400_BAD_REQUEST)
-           
-    return Response("Method is not allowed")
-
-# User Login and Token Generation
-@api_view(["POST"])
-def login(request):
-   
-    email = request.data.get("email")
-    password = request.data.get("password")
-
-    if not email or not password:
-        return Response({"error": "Email and password are required"}, status=status.HTTP_400_BAD_REQUEST)
-
-    user = authenticate(request, username=email, password=password)
-
-    if not user:
-        return Response({"error": "Email or Password is wrong!"}, status=status.HTTP_401_UNAUTHORIZED)
-    
-    if not user.is_active:
-        return Response({"error": "Account is inactive"}, status=status.HTTP_401_UNAUTHORIZED)
-
-
-    refresh = RefreshToken.for_user(user)
-    access_token = str(refresh.access_token)
-
-    return Response({
-        "access_token": access_token,
-        "refresh_token": str(refresh),
-    }, status=status.HTTP_200_OK)
-    
-
-
-@api_view(["POST"])
-def Password_reset_send_otp(request):
-   
-    email = request.data.get('email')
-    print(email)
-
-    try:
-        # Check if the user exists
-        existing_user = User.objects.get(username=email)
-        
-        if existing_user:
-            print("existing_user", existing_user)
-            
-            # Generate OTP
-            otp = generate_otp()
-            
-            # Save OTP to the database (assuming OTP model has 'email' and 'otp' fields)
-            OTP.objects.create(email=email, otp=otp)
-            
-            # Prepare the HTML content for the OTP email
-            html_content = render_to_string('otp_email_template.html', {'otp': otp, 'email': email})
-            
-            # Prepare email message
-            msg = EmailMultiAlternatives(
-                subject='Your OTP Code',
-                body='This is an OTP email.',
-                from_email='hijabpoint374@gmail.com',  # Replace with a valid sender email
-                to=[email],
-            )
-            
-            msg.attach_alternative(html_content, "text/html")
-            
-            # Send email and ensure it is sent without errors
-            msg.send(fail_silently=False)
-            
-            return Response({'message': 'OTP sent to your email.'}, status=status.HTTP_200_OK)
-    
-    except User.DoesNotExist:
-        # Handle the case where the user does not exist
-        return Response({'message': 'The account you provided does not exist. Please try again with another account.'}, status=status.HTTP_400_BAD_REQUEST)
-    
-    except Exception as e:
-        # Log the exception for debugging purposes (optional)
-        print(f"Error occurred: {e}")
-        return Response({'message': 'An unexpected error occurred. Please try again later.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-    
-
-@api_view(['POST'])
-def reset_password(request):
-    
-    email =  request.data.get('email')
-    new_password = request.data.get('newpassword')
-    
-    try:
-        
-        user = User.objects.get(username=email)
-        
-        if user:
-            user.set_password(new_password)
-            user.save()
-            return Response({"message": "Password changed successfully"}, status=status.HTTP_200_OK)
-        
-    
-    except User.DoesNotExist:
-        return Response({"message": "User not found"}, status=status.HTTP_404_NOT_FOUND)
-    
-    except Exception as e:
-        return Response({"message": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
-    
-
-#google_login
-@api_view(["POST"])
-def google_register(request):
-    
-    email = request.data.get("email")  
-    
-    if User.objects.filter(username=email).exists():
-        return Response({"error": "Email already exists"}, status=status.HTTP_400_BAD_REQUEST)
-    
-    user = User.objects.create_user(username=email)
-    user.save()
-    
-    UserProfile.objects.create(user=user)
-    
-    return Response({"message": "User created successfully"}, status=status.HTTP_201_CREATED)
-
-
-
-
-# User Login and Token Generation
-@api_view(["POST"])
-def google_login(request):
-    if request.method == "POST":
-        email = request.data.get("email")
-      
-
-        if not email:
-            return Response({"error": "Email and password are required"}, status=status.HTTP_400_BAD_REQUEST)
-
-        user= User.objects.filter(username=email).first()
-
-        if not user:
-            return Response({"error": "Email or Password is wrong!"}, status=status.HTTP_401_UNAUTHORIZED)
-    
-    
-        refresh = RefreshToken.for_user(user)
-        access_token = str(refresh.access_token)
-
-        return Response({
-            "access_token": access_token,
-            "refresh_token": str(refresh),
-        }, status=status.HTTP_200_OK)
-
-
-
-@api_view(['POST'])
-def refresh_access_token(request):
-    refresh_token = request.data.get('refresh_token')
-    if not refresh_token:
-        return Response({"error": "Refresh token is required"}, status=status.HTTP_400_BAD_REQUEST)
-    try:
-        refresh = RefreshToken(refresh_token)
-        new_access_token = str(refresh.access_token)
-        return Response({
-            'access_token': new_access_token
-        }, status=status.HTTP_200_OK)
-    except Exception as e:
-        return Response({"error": "Invalid refresh token"}, status=status.HTTP_400_BAD_REQUEST)
-     
 #userprofile       
 @api_view(['GET', 'PUT', 'PATCH'])
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated]) 
 def user_profile(request):
     profile = get_object_or_404(UserProfile,user=request.user)
 
@@ -267,57 +43,313 @@ def user_profile(request):
         serializer = UserProfileSerializer(profile, data=request.data, partial=(request.method == 'PATCH'))
 
         if request.FILES.get('profile_picture'):
+            print("profile_picture", request.FILES['profile_picture'])
           
             profile.profile_picture = request.FILES['profile_picture']
         
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=200)
         return Response(serializer.errors, status=400)
     
+ 
+ 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])  # Ensure only authenticated users can access
+def get_surgery_names(request):
+    # Filter surgeries by the logged-in user
+    user = request.user
+    names = PercantageSurgery.objects.filter(user=user).values_list('surgery_name', flat=True).distinct()
+    return Response({"names": list(names)})
     
 
-#surgery 
-@api_view(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
-def surgery(request, surgery_id=None):
-   
-    if surgery_id:
-        surgery_instance = get_object_or_404(Surgery, id=surgery_id, user=request.user)
-
+@api_view(['GET', 'POST', 'DELETE'])
+@permission_classes([IsAuthenticated])  # Restrict to authenticated users
+def percentage_surgery_view(request, pk=None):
     if request.method == 'GET':
-        if surgery_id: 
-            serializer = SurgerySerializer(surgery_instance)
-            return Response(serializer.data)
-        else: 
-            user_surgery_data = Surgery.objects.filter(user=request.user)
-            if user_surgery_data:
-                serializer = SurgerySerializer(user_surgery_data, many=True)
-                return Response(serializer.data)
-            else:
-                return Response({"message": "No surgeries found for the user."}, status=status.HTTP_404_NOT_FOUND)
+        if pk:
+            try:
+                percentage = PercantageSurgery.objects.get(pk=pk, user=request.user)
+                # Calculate completed surgeries for this percentage's surgery name
+                completed_surgeries_count = Surgery.objects.filter(
+                    user=request.user,
+                    name_of_surgery=percentage.surgery_name,
+                    
+                ).count()
 
-    elif request.method == 'POST':
-     
-        serializer = SurgerySerializer(data=request.data)
+                serializer = PercantageSerializer(percentage)
+                data = serializer.data
+                data['completed_surgeries'] = completed_surgeries_count  # Append the count
+                return Response(data, status=status.HTTP_200_OK)
+            except PercantageSurgery.DoesNotExist:
+                return Response({'error': 'PercantageSurgery not found'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            percentages = PercantageSurgery.objects.filter(user=request.user)
+            serializer = PercantageSerializer(percentages, many=True)
+            
+            # Append completed surgeries count for each percentage
+            data = []
+            for percentage in serializer.data:
+                completed_surgeries_count = Surgery.objects.filter(
+                    user=request.user,
+                    name_of_surgery=percentage['surgery_name'],
+                    
+                ).count()
+                print("param ", completed_surgeries_count)
+                percentage['completed_surgeries'] = completed_surgeries_count  # Append the count
+                data.append(percentage)
+
+            return Response(data, status=status.HTTP_200_OK)
+
+    if request.method == 'POST':
+        serializer = PercantageSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)  # Associate with the logged-in user
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'DELETE':
+        if pk:
+            try:
+                percentage = PercantageSurgery.objects.get(pk=pk, user=request.user)
+                percentage.delete()
+                return Response({'message': 'PercantageSurgery deleted successfully'}, status=status.HTTP_200_OK)
+            except PercantageSurgery.DoesNotExist:
+                return Response({'error': 'PercantageSurgery not found'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': 'ID is required for deletion'}, status=status.HTTP_400_BAD_REQUEST)
+
+# Surgery API Views
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated]) 
+def surgery_view(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            try:
+                surgery = Surgery.objects.get(pk=pk, user=request.user)
+                serializer = SurgerySerializer(surgery)
+                return Response(serializer.data)
+            except Surgery.DoesNotExist:
+                return Response({'error': 'Surgery not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        surgeries = Surgery.objects.filter(user=request.user)
+        
+        complete_surgeries = []
+        incomplete_surgeries = []
+        
+        def calculate_percentage(surgery):
+            fields = [
+                surgery.name_of_surgery,
+                surgery.type_of_surgery,
+                surgery.field_of_surgery,
+                surgery.complications,
+                surgery.histology,
+                surgery.main_surgeon,
+                surgery.date,
+                surgery.histology_description,
+                surgery.complications_description,
+                surgery.notes1,
+                surgery.notes2,
+            ]
+            filled_fields = sum(1 for field in fields if field not in [None, ""])
+            total_fields = len(fields)
+            return round((filled_fields / total_fields) * 100, 2)
+
+        for surgery in surgeries:
+            percentage_complete = calculate_percentage(surgery)
+            surgery_data = SurgerySerializer(surgery).data
+            surgery_data["percentage_complete"] = percentage_complete
+            
+            
+            if percentage_complete == 100:  # Fully complete
+                complete_surgeries.append(surgery_data)
+            else:  # Incomplete
+                incomplete_surgeries.append(surgery_data)
+        suergies = SurgerySerializer(surgeries, many=True)
+        
+        return Response({
+            'complete_surgeries': complete_surgeries,
+            'incomplete_surgeries': incomplete_surgeries,
+            'surgeries': suergies.data
+        }, status=status.HTTP_200_OK)
+        
+    if request.method == 'POST':
+        serializer = SurgerySerializer(data=request.data,partial=True)
+        print("serializer",serializer)
+        if serializer.is_valid():
+            surgery = serializer.save(user=request.user)
+            if surgery.histology or surgery.complications:
+                schedule_notification_db(surgery)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print(serializer.errors)  # Log the errors for debugging
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'PUT':
+        try:
+            surgery = Surgery.objects.get(pk=pk, user=request.user)
+            serializer = SurgerySerializer(surgery, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                if surgery.histology or surgery.complications:
+                      schedule_notification_db(surgery)
+                return Response(serializer.data , status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Surgery.DoesNotExist:
+            return Response({'error': 'Surgery not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'DELETE':
+        try:
+            surgery = Surgery.objects.get(pk=pk, user=request.user)
+            surgery.delete()
+            return Response({'message': 'Surgery deleted successfully'}, status=status.HTTP_200_OK)
+        except Surgery.DoesNotExist:
+            return Response({'error': 'Surgery not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+def schedule_notification_db(surgery):
+    notification_date = now() + timedelta(days=90)  # 3 months from now
+    Notification.objects.create(
+        user=surgery.user,
+        title="Surgery Follow-Up Reminder",
+        message=f"Reminder to follow up on the surgery '{surgery.name_of_surgery or 'Unnamed Surgery'}' performed on {surgery.date.date()}. Check the histology and complications.",
+        data={"surgery_id": surgery.id},
+        visible_at=notification_date,
+    )
+
+
+
+    
+    
+# Scientific API Views
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def scientific_view(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            try:
+                scientific = Scientific.objects.get(pk=pk, user=request.user)
+                serializer = ScientificSerializer(scientific)
+                return Response(serializer.data)
+            except Scientific.DoesNotExist:
+                return Response({'error': 'Scientific work not found'}, status=status.HTTP_404_NOT_FOUND)
+        scientifics = Scientific.objects.filter(user=request.user)
+        serializer = ScientificSerializer(scientifics, many=True)
+        return Response(serializer.data)
+
+    if request.method == 'POST':
+        serializer = ScientificSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method in ['PUT', 'PATCH']:
-        if surgery_id:  
-            serializer = SurgerySerializer(surgery_instance, data=request.data, partial=(request.method == 'PATCH'))
+    if request.method == 'PUT':
+        try:
+            scientific = Scientific.objects.get(pk=pk, user=request.user)
+            serializer = ScientificSerializer(scientific, data=request.data, partial=True)
             if serializer.is_valid():
-                serializer.save()  
+                serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Scientific.DoesNotExist:
+            return Response({'error': 'Scientific work not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    elif request.method == 'DELETE':
-        if surgery_id:  
-            surgery_instance.delete()
-            return Response({"message": "Surgery record deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    if request.method == 'DELETE':
+        try:
+            scientific = Scientific.objects.get(pk=pk, user=request.user)
+            scientific.delete()
+            return Response({'message': 'Scientific work deleted successfully'}, status=status.HTTP_200_OK)
+        except Scientific.DoesNotExist:
+            return Response({'error': 'Scientific work not found'}, status=status.HTTP_404_NOT_FOUND)
+
+# Course API Views
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def course_view(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            try:
+                course = Course.objects.get(pk=pk, user=request.user)
+                serializer = CourseSerializer(course)
+                return Response(serializer.data)
+            except Course.DoesNotExist:
+                return Response({'error': 'Course not found'}, status=status.HTTP_404_NOT_FOUND)
+        courses = Course.objects.filter(user=request.user)
+        serializer = CourseSerializer(courses, many=True)
+        return Response(serializer.data)
+
+    if request.method == 'POST':
+        serializer = CourseSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'PUT':
+        try:
+            course = Course.objects.get(pk=pk, user=request.user)
+            serializer = CourseSerializer(course, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Course.DoesNotExist:
+            return Response({'error': 'Course not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'DELETE':
+        try:
+            course = Course.objects.get(pk=pk, user=request.user)
+            course.delete()
+            return Response({'message': 'Course deleted successfully'}, status=status.HTTP_200_OK)
+        except Course.DoesNotExist:
+            return Response({'error': 'Course not found'}, status=status.HTTP_404_NOT_FOUND)
+
+# Budget API Views
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def budget_view(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            try:
+                budget = Budget.objects.get(pk=pk, user=request.user)
+                serializer = BudgetSerializer(budget)
+                return Response(serializer.data)
+            except Budget.DoesNotExist:
+                return Response({'error': 'Budget not found'}, status=status.HTTP_404_NOT_FOUND)
+        budgets = Budget.objects.filter(user=request.user)
+        serializer = BudgetSerializer(budgets, many=True)
+        return Response(serializer.data)
+
+    if request.method == 'POST':
+        serializer = BudgetSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'PUT':
+        try:
+            budget = Budget.objects.get(pk=pk, user=request.user)
+            serializer = BudgetSerializer(budget, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Budget.DoesNotExist:
+            return Response({'error': 'Budget not found'}, status=status.HTTP_404_NOT_FOUND)  
+
+    if request.method == 'DELETE':
+        try:
+            budget = Budget.objects.get(pk=pk, user=request.user)
+            budget.delete()
+            return Response({'message': 'Budget deleted successfully'}, status=status.HTTP_200_OK)
+        except Budget.DoesNotExist:
+            return Response({'error': 'Budget not found'}, status=status.HTTP_404_NOT_FOUND)
         
         
         
@@ -327,8 +359,8 @@ def surgery(request, surgery_id=None):
 
 
 @api_view(['GET'])
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated]) 
 def export_surgery_to_excel(request):
     # Create a new workbook and activate a worksheet
     wb = Workbook()
@@ -556,8 +588,8 @@ class PDF(FPDF):
         self.line(x_left,y3,x_right,y3)
 
 @api_view(['GET'])
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated]) 
 def export_surgery_to_pdf(request):
     # Create the PDF
     pdf = PDF()
@@ -606,8 +638,8 @@ from django.conf import settings
 from .models import Surgery
 
 @api_view(['GET'])
-@authentication_classes([JWTAuthentication])
-@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated]) 
 def export_surgery_to_google_sheets(request):
     # Set up the credentials and authenticate with Google Sheets API
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
@@ -642,4 +674,32 @@ def export_surgery_to_google_sheets(request):
         "sheet_url": google_sheet_url
     }, status=status.HTTP_200_OK)
 
+@api_view(["POST"])
+def send_support_email(request):
+    if request.method == "POST":
+        try:
+           
+          
+            message = request.data.get("message")
+            user_email = request.data.get("email")  # Fetch logged-in user's email
+            admin_email = "hijabpoint374@gmail.com"  # Replace with admin's email
+
+            if not message:
+                return Response({"error": "Message content is required."}, status=400)
+
+            # Send email to the admin
+            send_mail(
+                subject=f"Support Request from {request.user.username}",
+                message=f"User Email: {user_email}\n\nMessage: {message}",
+                from_email=user_email,
+                recipient_list=[admin_email],
+                fail_silently=False,
+            )
+
+            return Response({"success": "Your message has been sent successfully."} , status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+
+    return JsonReResponsesponse({"error": "Invalid request method."}, status=405)
 
