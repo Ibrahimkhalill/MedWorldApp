@@ -141,14 +141,14 @@ class Subscription(models.Model):
 
     def activate_free_trial(self, duration_days=30):
         """Activate free trial for a specific duration."""
-        now = datetime.now()  # Use timezone-aware datetime
+        now = timezone.now()  # Use timezone-aware datetime
         self.free_trial = True
         self.free_trial_end = now + timedelta(days=duration_days)
         self.save()
 
     def activate_subscription(self, duration_days=30):
         """Activate subscription for a specific duration."""
-        now = datetime.now()  # Use timezone-aware datetime
+        now = timezone.now()  # Use timezone-aware datetime
         self.is_active = True
         self.start_date = now
         self.end_date = now + timedelta(days=duration_days)
@@ -156,7 +156,7 @@ class Subscription(models.Model):
 
     def check_status(self):
         """Check if free trial or subscription has expired."""
-        now = datetime.now()  # Use timezone-aware datetime
+        now = timezone.now()  # Use timezone-aware datetime
         
         # Check free trial status
         if self.free_trial and self.free_trial_end and now >= self.free_trial_end:

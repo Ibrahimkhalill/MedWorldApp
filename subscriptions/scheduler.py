@@ -8,7 +8,7 @@ def check_subscription_status():
     """
     Automatically check and deactivate expired free trials or subscriptions.
     """
-    now = datetime.now()
+    now = timezone.now()
 
     # Check for expired free trials
     free_trial_expired = Subscription.objects.filter(

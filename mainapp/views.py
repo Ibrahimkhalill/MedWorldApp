@@ -43,6 +43,7 @@ def user_profile(request):
         serializer = UserProfileSerializer(profile, data=request.data, partial=(request.method == 'PATCH'))
 
         if request.FILES.get('profile_picture'):
+         
             print("profile_picture", request.FILES['profile_picture'])
           
             profile.profile_picture = request.FILES['profile_picture']
