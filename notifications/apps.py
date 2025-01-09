@@ -7,5 +7,5 @@ class NotificationsConfig(AppConfig):
     
     def ready(self):
         from .scheduler import start_scheduler
-        import notifications.firebase_config
+       
         start_scheduler()
