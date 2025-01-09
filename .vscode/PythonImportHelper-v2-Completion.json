@@ -360,6 +360,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -369,6 +385,30 @@
     },
     {
         "label": "transaction",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
         "importPath": "django.db",
         "description": "django.db",
         "isExtraImport": true,
@@ -546,6 +586,30 @@
         "documentation": {}
     },
     {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
+        "documentation": {}
+    },
+    {
         "label": "Response",
         "importPath": "rest_framework.response",
         "description": "rest_framework.response",
@@ -691,14 +755,6 @@
     },
     {
         "label": "permission_classes",
-        "importPath": "rest_framework.decorators",
-        "description": "rest_framework.decorators",
-        "isExtraImport": true,
-        "detail": "rest_framework.decorators",
-        "documentation": {}
-    },
-    {
-        "label": "api_view",
         "importPath": "rest_framework.decorators",
         "description": "rest_framework.decorators",
         "isExtraImport": true,
@@ -1226,6 +1282,14 @@
         "documentation": {}
     },
     {
+        "label": "timezone",
+        "importPath": "django.utils",
+        "description": "django.utils",
+        "isExtraImport": true,
+        "detail": "django.utils",
+        "documentation": {}
+    },
+    {
         "label": "django.http",
         "kind": 6,
         "isExtraImport": true,
@@ -1275,6 +1339,22 @@
         "documentation": {}
     },
     {
+        "label": "JsonResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "JsonResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
         "label": "HttpResponse",
         "importPath": "django.http",
         "description": "django.http",
@@ -1387,6 +1467,14 @@
         "documentation": {}
     },
     {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
         "label": "timedelta",
         "importPath": "datetime",
         "description": "datetime",
@@ -1436,6 +1524,14 @@
     },
     {
         "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
         "importPath": "datetime",
         "description": "datetime",
         "isExtraImport": true,
@@ -1502,12 +1598,44 @@
         "documentation": {}
     },
     {
+        "label": "TruncMonth",
+        "importPath": "django.db.models.functions",
+        "description": "django.db.models.functions",
+        "isExtraImport": true,
+        "detail": "django.db.models.functions",
+        "documentation": {}
+    },
+    {
+        "label": "TruncYear",
+        "importPath": "django.db.models.functions",
+        "description": "django.db.models.functions",
+        "isExtraImport": true,
+        "detail": "django.db.models.functions",
+        "documentation": {}
+    },
+    {
+        "label": "Count",
+        "importPath": "django.db.models",
+        "description": "django.db.models",
+        "isExtraImport": true,
+        "detail": "django.db.models",
+        "documentation": {}
+    },
+    {
         "label": "django.db.models.deletion",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "django.db.models.deletion",
         "description": "django.db.models.deletion",
         "detail": "django.db.models.deletion",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
         "documentation": {}
     },
     {
@@ -1681,6 +1809,39 @@
         "documentation": {}
     },
     {
+        "label": "firebase_admin",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "firebase_admin",
+        "description": "firebase_admin",
+        "detail": "firebase_admin",
+        "documentation": {}
+    },
+    {
+        "label": "credentials",
+        "importPath": "firebase_admin",
+        "description": "firebase_admin",
+        "isExtraImport": true,
+        "detail": "firebase_admin",
+        "documentation": {}
+    },
+    {
+        "label": "messaging",
+        "importPath": "firebase_admin",
+        "description": "firebase_admin",
+        "isExtraImport": true,
+        "detail": "firebase_admin",
+        "documentation": {}
+    },
+    {
+        "label": "BackgroundScheduler",
+        "importPath": "apscheduler.schedulers.background",
+        "description": "apscheduler.schedulers.background",
+        "isExtraImport": true,
+        "detail": "apscheduler.schedulers.background",
+        "documentation": {}
+    },
+    {
         "label": "BackgroundScheduler",
         "importPath": "apscheduler.schedulers.background",
         "description": "apscheduler.schedulers.background",
@@ -1694,6 +1855,111 @@
         "description": "apscheduler.triggers.interval",
         "isExtraImport": true,
         "detail": "apscheduler.triggers.interval",
+        "documentation": {}
+    },
+    {
+        "label": "IntervalTrigger",
+        "importPath": "apscheduler.triggers.interval",
+        "description": "apscheduler.triggers.interval",
+        "isExtraImport": true,
+        "detail": "apscheduler.triggers.interval",
+        "documentation": {}
+    },
+    {
+        "label": "csrf_exempt",
+        "importPath": "django.views.decorators.csrf",
+        "description": "django.views.decorators.csrf",
+        "isExtraImport": true,
+        "detail": "django.views.decorators.csrf",
+        "documentation": {}
+    },
+    {
+        "label": "defaultdict",
+        "importPath": "collections",
+        "description": "collections",
+        "isExtraImport": true,
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "webdriver",
+        "importPath": "selenium",
+        "description": "selenium",
+        "isExtraImport": true,
+        "detail": "selenium",
+        "documentation": {}
+    },
+    {
+        "label": "Service",
+        "importPath": "selenium.webdriver.chrome.service",
+        "description": "selenium.webdriver.chrome.service",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.chrome.service",
+        "documentation": {}
+    },
+    {
+        "label": "Options",
+        "importPath": "selenium.webdriver.chrome.options",
+        "description": "selenium.webdriver.chrome.options",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.chrome.options",
+        "documentation": {}
+    },
+    {
+        "label": "ChromeDriverManager",
+        "importPath": "webdriver_manager.chrome",
+        "description": "webdriver_manager.chrome",
+        "isExtraImport": true,
+        "detail": "webdriver_manager.chrome",
+        "documentation": {}
+    },
+    {
+        "label": "By",
+        "importPath": "selenium.webdriver.common.by",
+        "description": "selenium.webdriver.common.by",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.common.by",
+        "documentation": {}
+    },
+    {
+        "label": "Keys",
+        "importPath": "selenium.webdriver.common.keys",
+        "description": "selenium.webdriver.common.keys",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.common.keys",
+        "documentation": {}
+    },
+    {
+        "label": "WebDriverWait",
+        "importPath": "selenium.webdriver.support.ui",
+        "description": "selenium.webdriver.support.ui",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.support.ui",
+        "documentation": {}
+    },
+    {
+        "label": "expected_conditions",
+        "importPath": "selenium.webdriver.support",
+        "description": "selenium.webdriver.support",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.support",
+        "documentation": {}
+    },
+    {
+        "label": "Display",
+        "importPath": "pyvirtualdisplay",
+        "description": "pyvirtualdisplay",
+        "isExtraImport": true,
+        "detail": "pyvirtualdisplay",
         "documentation": {}
     },
     {
@@ -1728,7 +1994,7 @@
         "kind": 2,
         "importPath": "authentications.views",
         "description": "authentications.views",
-        "peekOfCode": "def register(request):\n    if request.method == \"POST\":\n        email = request.data.get(\"email\")  # Use email as the username\n        password = request.data.get(\"password\")\n        userName = request.data.get(\"userName\")\n        specialty= request.data.get(\"specialty\")\n        residencyDuration= request.data.get(\"residencyDuration\")\n        residencyYear= request.data.get(\"residencyYear\")\n        if not email or not password:\n            return Response({\"error\": \"Email and password are required\"}, status=status.HTTP_400_BAD_REQUEST)",
+        "peekOfCode": "def register(request):\n    if request.method == \"POST\":\n        email = request.data.get(\"email\")\n        password = request.data.get(\"password\")\n        userName = request.data.get(\"userName\")\n        specialty = request.data.get(\"specialty\")\n        residencyDuration = request.data.get(\"residencyDuration\")\n        residencyYear = request.data.get(\"residencyYear\")\n        if not email or not password:\n            return Response({\"error\": \"Email and password are required\"}, status=status.HTTP_400_BAD_REQUEST)",
         "detail": "authentications.views",
         "documentation": {}
     },
@@ -1756,6 +2022,15 @@
         "importPath": "authentications.views",
         "description": "authentications.views",
         "peekOfCode": "def login(request):\n    email = request.data.get(\"email\")\n    password = request.data.get(\"password\")\n    if not email or not password:\n        return Response({\"error\": \"Email and password are required\"}, status=status.HTTP_400_BAD_REQUEST)\n    # Authenticate the user\n    user = authenticate(request, username=email, password=password)\n    if not user:\n        return Response({\"error\": \"Email or Password is wrong!\"}, status=status.HTTP_401_UNAUTHORIZED)\n    if not user.is_active:",
+        "detail": "authentications.views",
+        "documentation": {}
+    },
+    {
+        "label": "admin_login",
+        "kind": 2,
+        "importPath": "authentications.views",
+        "description": "authentications.views",
+        "peekOfCode": "def admin_login(request):\n    email = request.data.get(\"email\")\n    password = request.data.get(\"password\")\n    if not email or not password:\n        return Response({\"error\": \"Email and password are required\"}, status=status.HTTP_400_BAD_REQUEST)\n    # Authenticate the user\n    user = authenticate(request, username=email, password=password)\n    if not user:\n        return Response({\"error\": \"Email or Password is wrong!\"}, status=status.HTTP_401_UNAUTHORIZED)\n    if not user.is_active:",
         "detail": "authentications.views",
         "documentation": {}
     },
@@ -1809,7 +2084,7 @@
         "kind": 2,
         "importPath": "authentications.views",
         "description": "authentications.views",
-        "peekOfCode": "def delete_user_and_related_data(request):\n    try:\n        # Start a database transaction to ensure atomicity\n        with transaction.atomic():\n            user = request.user\n            user.delete()\n            print(\"User and all related data deleted successfully.\")\n    except User.DoesNotExist:\n        print(\"User does not exist.\")\n    except ProtectedError:",
+        "peekOfCode": "def delete_user_and_related_data(request):\n    try:\n        # Start a database transaction to ensure atomicity\n        with transaction.atomic():\n            user = request.user\n            user.delete()\n            Response({\"messages\":\"User and all related data deleted successfully.\"},status=status.HTTP_200_OK)\n    except User.DoesNotExist:\n        print(\"User does not exist.\")\n    except ProtectedError:",
         "detail": "authentications.views",
         "documentation": {}
     },
@@ -1818,7 +2093,25 @@
         "kind": 2,
         "importPath": "authentications.views",
         "description": "authentications.views",
-        "peekOfCode": "def check_email_availability(request):\n    serializer = CheckEmailSerializer(data=request.data)\n    if not serializer.is_valid():\n        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n    email = serializer.validated_data['email'].strip().lower()\n    email_exists = User.objects.filter(username=email).exists()\n    return Response({'exists': email_exists}, status=status.HTTP_200_OK)",
+        "peekOfCode": "def check_email_availability(request):\n    serializer = CheckEmailSerializer(data=request.data)\n    if not serializer.is_valid():\n        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)\n    email = serializer.validated_data['email'].strip().lower()\n    email_exists = User.objects.filter(username=email).exists()\n    return Response({'exists': email_exists}, status=status.HTTP_200_OK)\nfrom django.db.models.functions import TruncMonth, TruncYear\nfrom django.db.models import Count\nfrom django.contrib.auth.models import User",
+        "detail": "authentications.views",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_users_by_year",
+        "kind": 2,
+        "importPath": "authentications.views",
+        "description": "authentications.views",
+        "peekOfCode": "def calculate_users_by_year():\n    # Get the earliest user creation year\n    first_user = User.objects.order_by(\"date_joined\").first()\n    if not first_user:\n        return {\"error\": \"No users found.\"}\n    starting_year = first_user.date_joined.year\n    current_year = datetime.now().year\n    # Prepare the result\n    yearly_data = {}\n    for year in range(starting_year, current_year + 1):",
+        "detail": "authentications.views",
+        "documentation": {}
+    },
+    {
+        "label": "yearly_user_data_view",
+        "kind": 2,
+        "importPath": "authentications.views",
+        "description": "authentications.views",
+        "peekOfCode": "def yearly_user_data_view(request):\n    try:\n        data = calculate_users_by_year()\n        return Response(data, status=200)\n    except Exception as e:\n        return Response({\"error\": str(e)}, status=500)",
         "detail": "authentications.views",
         "documentation": {}
     },
@@ -1976,6 +2269,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "mainapp.migrations.0018_privacypolicy_termscondition",
+        "description": "mainapp.migrations.0018_privacypolicy_termscondition",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('mainapp', '0017_subscription_free_trial_end'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='PrivacyPolicy',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('text', models.TextField(blank=True, null=True)),",
+        "detail": "mainapp.migrations.0018_privacypolicy_termscondition",
+        "documentation": {}
+    },
+    {
         "label": "MainappConfig",
         "kind": 6,
         "importPath": "mainapp.apps",
@@ -2066,6 +2368,24 @@
         "documentation": {}
     },
     {
+        "label": "TermsCondition",
+        "kind": 6,
+        "importPath": "mainapp.models",
+        "description": "mainapp.models",
+        "peekOfCode": "class TermsCondition(models.Model):\n    text = models.TextField(blank=True, null=True)\nclass PrivacyPolicy(models.Model):\n    text = models.TextField(blank=True, null=True)",
+        "detail": "mainapp.models",
+        "documentation": {}
+    },
+    {
+        "label": "PrivacyPolicy",
+        "kind": 6,
+        "importPath": "mainapp.models",
+        "description": "mainapp.models",
+        "peekOfCode": "class PrivacyPolicy(models.Model):\n    text = models.TextField(blank=True, null=True)",
+        "detail": "mainapp.models",
+        "documentation": {}
+    },
+    {
         "label": "UserSerializer",
         "kind": 6,
         "importPath": "mainapp.serializers",
@@ -2133,7 +2453,7 @@
         "kind": 6,
         "importPath": "mainapp.serializers",
         "description": "mainapp.serializers",
-        "peekOfCode": "class NotificationSerializer(serializers.ModelSerializer):\n    user = UserSerializer(read_only=True)\n    class Meta:\n        model = Notification\n        fields = ['id', 'user', 'title', 'message', 'data', 'created_at', 'is_read', 'visible_at']\n        read_only_fields = ['user', 'created_at', 'visible_at', 'is_read']\nclass SubscriptionSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Subscription\n        fields = [",
+        "peekOfCode": "class NotificationSerializer(serializers.ModelSerializer):\n    user = UserSerializer(read_only=True)\n    class Meta:\n        model = Notification\n        fields = ['id', 'user', 'title', 'message', 'data', 'created_at', 'is_read', 'visible_at']\n        read_only_fields = ['user', 'created_at', 'visible_at', 'is_read']\nclass SubscriptionSerializer(serializers.ModelSerializer):\n    user_profile = UserProfileSerializer(source='user.userprofile', read_only=True)  # Access related UserProfile\n    class Meta:\n        model = Subscription",
         "detail": "mainapp.serializers",
         "documentation": {}
     },
@@ -2142,7 +2462,7 @@
         "kind": 6,
         "importPath": "mainapp.serializers",
         "description": "mainapp.serializers",
-        "peekOfCode": "class SubscriptionSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Subscription\n        fields = [\n            'id',\n            'user',\n            'stripe_customer_id',\n            'stripe_subscription_id',\n            'is_active',\n            'free_trial',",
+        "peekOfCode": "class SubscriptionSerializer(serializers.ModelSerializer):\n    user_profile = UserProfileSerializer(source='user.userprofile', read_only=True)  # Access related UserProfile\n    class Meta:\n        model = Subscription\n        fields = [\n            'id',\n            'user',\n            'user_profile',  # Include the UserProfile data here\n            'stripe_customer_id',\n            'stripe_subscription_id',",
         "detail": "mainapp.serializers",
         "documentation": {}
     },
@@ -2151,7 +2471,25 @@
         "kind": 6,
         "importPath": "mainapp.serializers",
         "description": "mainapp.serializers",
-        "peekOfCode": "class CheckEmailSerializer(serializers.Serializer):\n    email = serializers.EmailField(required=True, allow_blank=False)",
+        "peekOfCode": "class CheckEmailSerializer(serializers.Serializer):\n    email = serializers.EmailField(required=True, allow_blank=False)\nclass TermsConditionSeriaLizer(serializers.ModelSerializer):\n    class Meta:\n        model = TermsCondition\n        fields = ['id', 'text']\nclass PrivacyPolicySeriaLizer(serializers.ModelSerializer):\n    class Meta:\n        model = PrivacyPolicy\n        fields = ['id', 'text']",
+        "detail": "mainapp.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "TermsConditionSeriaLizer",
+        "kind": 6,
+        "importPath": "mainapp.serializers",
+        "description": "mainapp.serializers",
+        "peekOfCode": "class TermsConditionSeriaLizer(serializers.ModelSerializer):\n    class Meta:\n        model = TermsCondition\n        fields = ['id', 'text']\nclass PrivacyPolicySeriaLizer(serializers.ModelSerializer):\n    class Meta:\n        model = PrivacyPolicy\n        fields = ['id', 'text']",
+        "detail": "mainapp.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "PrivacyPolicySeriaLizer",
+        "kind": 6,
+        "importPath": "mainapp.serializers",
+        "description": "mainapp.serializers",
+        "peekOfCode": "class PrivacyPolicySeriaLizer(serializers.ModelSerializer):\n    class Meta:\n        model = PrivacyPolicy\n        fields = ['id', 'text']",
         "detail": "mainapp.serializers",
         "documentation": {}
     },
@@ -2160,7 +2498,7 @@
         "kind": 5,
         "importPath": "mainapp.urls",
         "description": "mainapp.urls",
-        "peekOfCode": "urlpatterns = [\n   path(\"api/login/\", login),\n   path('api/check-email/', check_email_availability, name='check-email'),\n   path(\"api/register/\", register),\n   path(\"api/delete_user_and_related_data/\", delete_user_and_related_data),\n   path(\"api/send-otp/\", send_otp),\n   path(\"api/verify-otp/\", verify_otp),\n   path(\"google-register/\", google_register),\n   path(\"google-login/\", google_login),\n   path(\"api/password-reset-otp/\", Password_reset_send_otp),",
+        "peekOfCode": "urlpatterns = [\n   path(\"api/login/\", login),\n   path(\"api/admin-login/\", admin_login),\n   path('api/check-email/', check_email_availability, name='check-email'),\n   path(\"api/register/\", register),\n   path(\"api/delete_user_and_related_data/\", delete_user_and_related_data),\n   path(\"api/send-otp/\", send_otp),\n   path(\"api/verify-otp/\", verify_otp),\n   path(\"google-register/\", google_register),\n   path(\"google-login/\", google_login),",
         "detail": "mainapp.urls",
         "documentation": {}
     },
@@ -2232,7 +2570,7 @@
         "kind": 2,
         "importPath": "mainapp.views",
         "description": "mainapp.views",
-        "peekOfCode": "def course_view(request, pk=None):\n    if request.method == 'GET':\n        if pk:\n            try:\n                course = Course.objects.get(pk=pk, user=request.user)\n                serializer = CourseSerializer(course)\n                return Response(serializer.data)\n            except Course.DoesNotExist:\n                return Response({'error': 'Course not found'}, status=status.HTTP_404_NOT_FOUND)\n        courses = Course.objects.filter(user=request.user)",
+        "peekOfCode": "def course_view(request, pk=None):\n    if request.method == 'GET':\n        if pk:\n            try:\n                course = Course.objects.get(pk=pk, user=request.user)\n                serializer = CourseSerializer(course)\n                return Response(serializer.data)\n            except Course.DoesNotExist:\n                return Response({'error': 'Course not found'}, status=status.HTTP_404_NOT_FOUND)\n        courses = Course.objects.filter(user=request.user).order_by('-date')",
         "detail": "mainapp.views",
         "documentation": {}
     },
@@ -2241,7 +2579,7 @@
         "kind": 2,
         "importPath": "mainapp.views",
         "description": "mainapp.views",
-        "peekOfCode": "def budget_view(request, pk=None):\n    if request.method == 'GET':\n        if pk:\n            try:\n                budget = Budget.objects.get(pk=pk, user=request.user)\n                serializer = BudgetSerializer(budget)\n                return Response(serializer.data)\n            except Budget.DoesNotExist:\n                return Response({'error': 'Budget not found'}, status=status.HTTP_404_NOT_FOUND)\n        budgets = Budget.objects.filter(user=request.user)",
+        "peekOfCode": "def budget_view(request, pk=None):\n    if request.method == 'GET':\n        if pk:\n            try:\n                budget = Budget.objects.get(pk=pk, user=request.user)   \n                serializer = BudgetSerializer(budget)\n                return Response(serializer.data)\n            except Budget.DoesNotExist:\n                return Response({'error': 'Budget not found'}, status=status.HTTP_404_NOT_FOUND)\n        budgets = Budget.objects.filter(user=request.user).order_by('-date')",
         "detail": "mainapp.views",
         "documentation": {}
     },
@@ -2282,6 +2620,24 @@
         "documentation": {}
     },
     {
+        "label": "terms_condition_api",
+        "kind": 2,
+        "importPath": "mainapp.views",
+        "description": "mainapp.views",
+        "peekOfCode": "def terms_condition_api(request, pk=None):\n    # GET: Retrieve all terms or a specific term by ID\n    if request.method == 'GET':\n        terms = TermsCondition.objects.all()\n        serializer = TermsConditionSeriaLizer(terms, many=True)\n        return Response(serializer.data, status=status.HTTP_200_OK)\n    # POST: Create a new term\n    elif request.method == 'POST':\n        serializer = TermsConditionSeriaLizer(data=request.data)\n        if serializer.is_valid():",
+        "detail": "mainapp.views",
+        "documentation": {}
+    },
+    {
+        "label": "privacy_policy_api",
+        "kind": 2,
+        "importPath": "mainapp.views",
+        "description": "mainapp.views",
+        "peekOfCode": "def privacy_policy_api(request, pk=None):\n    # GET: Retrieve all policies or a specific policy by ID\n    if request.method == 'GET':\n        policies = PrivacyPolicy.objects.all()\n        serializer = PrivacyPolicySeriaLizer(policies, many=True)\n        return Response(serializer.data, status=status.HTTP_200_OK)\n    # POST: Create a new policy\n    elif request.method == 'POST':\n        serializer = PrivacyPolicySeriaLizer(data=request.data)\n        if serializer.is_valid():",
+        "detail": "mainapp.views",
+        "documentation": {}
+    },
+    {
         "label": "application",
         "kind": 5,
         "importPath": "medworld.asgi",
@@ -2295,7 +2651,7 @@
         "kind": 5,
         "importPath": "medworld.settings",
         "description": "medworld.settings",
-        "peekOfCode": "BASE_DIR = Path(__file__).resolve().parent.parent\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = 'django-insecure--l%rm*&6sp(j*hn93$dvjd!(jhloy0iq_g@0f^)#433(7wq3a^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = [\"e418-115-127-156-9.ngrok-free.app\",\"127.0.0.1\"]\n# Application definition\nINSTALLED_APPS = [",
+        "peekOfCode": "BASE_DIR = Path(__file__).resolve().parent.parent\n# Quick-start development settings - unsuitable for production\n# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/\n# SECURITY WARNING: keep the secret key used in production secret!\nSECRET_KEY = 'django-insecure--l%rm*&6sp(j*hn93$dvjd!(jhloy0iq_g@0f^)#433(7wq3a^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = [\"e044-115-127-156-9.ngrok-free.app\",\"127.0.0.1\", \"localhost\"]\n# Application definition\nINSTALLED_APPS = [",
         "detail": "medworld.settings",
         "documentation": {}
     },
@@ -2304,7 +2660,7 @@
         "kind": 5,
         "importPath": "medworld.settings",
         "description": "medworld.settings",
-        "peekOfCode": "SECRET_KEY = 'django-insecure--l%rm*&6sp(j*hn93$dvjd!(jhloy0iq_g@0f^)#433(7wq3a^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = [\"e418-115-127-156-9.ngrok-free.app\",\"127.0.0.1\"]\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',",
+        "peekOfCode": "SECRET_KEY = 'django-insecure--l%rm*&6sp(j*hn93$dvjd!(jhloy0iq_g@0f^)#433(7wq3a^'\n# SECURITY WARNING: don't run with debug turned on in production!\nDEBUG = True\nALLOWED_HOSTS = [\"e044-115-127-156-9.ngrok-free.app\",\"127.0.0.1\", \"localhost\"]\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',",
         "detail": "medworld.settings",
         "documentation": {}
     },
@@ -2313,7 +2669,7 @@
         "kind": 5,
         "importPath": "medworld.settings",
         "description": "medworld.settings",
-        "peekOfCode": "DEBUG = True\nALLOWED_HOSTS = [\"e418-115-127-156-9.ngrok-free.app\",\"127.0.0.1\"]\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',",
+        "peekOfCode": "DEBUG = True\nALLOWED_HOSTS = [\"e044-115-127-156-9.ngrok-free.app\",\"127.0.0.1\", \"localhost\"]\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',",
         "detail": "medworld.settings",
         "documentation": {}
     },
@@ -2322,7 +2678,7 @@
         "kind": 5,
         "importPath": "medworld.settings",
         "description": "medworld.settings",
-        "peekOfCode": "ALLOWED_HOSTS = [\"e418-115-127-156-9.ngrok-free.app\",\"127.0.0.1\"]\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'mainapp',",
+        "peekOfCode": "ALLOWED_HOSTS = [\"e044-115-127-156-9.ngrok-free.app\",\"127.0.0.1\", \"localhost\"]\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'mainapp',",
         "detail": "medworld.settings",
         "documentation": {}
     },
@@ -2336,11 +2692,20 @@
         "documentation": {}
     },
     {
+        "label": "CORS_ALLOW_ALL_ORIGINS",
+        "kind": 5,
+        "importPath": "medworld.settings",
+        "description": "medworld.settings",
+        "peekOfCode": "CORS_ALLOW_ALL_ORIGINS = True\nREST_FRAMEWORK = {\n    'DEFAULT_AUTHENTICATION_CLASSES': [\n        'rest_framework.authentication.TokenAuthentication',\n    ],\n}\nMIDDLEWARE = [\n    'corsheaders.middleware.CorsMiddleware',\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',",
+        "detail": "medworld.settings",
+        "documentation": {}
+    },
+    {
         "label": "REST_FRAMEWORK",
         "kind": 5,
         "importPath": "medworld.settings",
         "description": "medworld.settings",
-        "peekOfCode": "REST_FRAMEWORK = {\n    'DEFAULT_AUTHENTICATION_CLASSES': [\n        'rest_framework.authentication.TokenAuthentication',\n    ],\n}\nMIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',",
+        "peekOfCode": "REST_FRAMEWORK = {\n    'DEFAULT_AUTHENTICATION_CLASSES': [\n        'rest_framework.authentication.TokenAuthentication',\n    ],\n}\nMIDDLEWARE = [\n    'corsheaders.middleware.CorsMiddleware',\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',",
         "detail": "medworld.settings",
         "documentation": {}
     },
@@ -2349,7 +2714,7 @@
         "kind": 5,
         "importPath": "medworld.settings",
         "description": "medworld.settings",
-        "peekOfCode": "MIDDLEWARE = [\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',\n]\nROOT_URLCONF = 'medworld.urls'",
+        "peekOfCode": "MIDDLEWARE = [\n    'corsheaders.middleware.CorsMiddleware',\n    'django.middleware.security.SecurityMiddleware',\n    'django.contrib.sessions.middleware.SessionMiddleware',\n    'django.middleware.common.CommonMiddleware',\n    'django.middleware.csrf.CsrfViewMiddleware',\n    'django.contrib.auth.middleware.AuthenticationMiddleware',\n    'django.contrib.messages.middleware.MessageMiddleware',\n    'django.middleware.clickjacking.XFrameOptionsMiddleware',\n]",
         "detail": "medworld.settings",
         "documentation": {}
     },
@@ -2412,7 +2777,7 @@
         "kind": 5,
         "importPath": "medworld.settings",
         "description": "medworld.settings",
-        "peekOfCode": "LANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\nMEDIA_URL = '/user/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media/')\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.1/howto/static-files/\nSTATIC_URL = '/static/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static/')",
+        "peekOfCode": "LANGUAGE_CODE = 'en-us'\nTIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media/')\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.1/howto/static-files/\nSTATIC_URL = '/static/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static/')",
         "detail": "medworld.settings",
         "documentation": {}
     },
@@ -2421,7 +2786,7 @@
         "kind": 5,
         "importPath": "medworld.settings",
         "description": "medworld.settings",
-        "peekOfCode": "TIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\nMEDIA_URL = '/user/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media/')\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.1/howto/static-files/\nSTATIC_URL = '/static/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static/')\n# Default primary key field type",
+        "peekOfCode": "TIME_ZONE = 'UTC'\nUSE_I18N = True\nUSE_TZ = True\nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media/')\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.1/howto/static-files/\nSTATIC_URL = '/static/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static/')\n# Default primary key field type",
         "detail": "medworld.settings",
         "documentation": {}
     },
@@ -2430,7 +2795,7 @@
         "kind": 5,
         "importPath": "medworld.settings",
         "description": "medworld.settings",
-        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\nMEDIA_URL = '/user/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media/')\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.1/howto/static-files/\nSTATIC_URL = '/static/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static/')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field",
+        "peekOfCode": "USE_I18N = True\nUSE_TZ = True\nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media/')\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.1/howto/static-files/\nSTATIC_URL = '/static/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static/')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field",
         "detail": "medworld.settings",
         "documentation": {}
     },
@@ -2439,7 +2804,7 @@
         "kind": 5,
         "importPath": "medworld.settings",
         "description": "medworld.settings",
-        "peekOfCode": "USE_TZ = True\nMEDIA_URL = '/user/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media/')\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.1/howto/static-files/\nSTATIC_URL = '/static/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static/')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
+        "peekOfCode": "USE_TZ = True\nMEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media/')\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.1/howto/static-files/\nSTATIC_URL = '/static/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static/')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'",
         "detail": "medworld.settings",
         "documentation": {}
     },
@@ -2448,7 +2813,7 @@
         "kind": 5,
         "importPath": "medworld.settings",
         "description": "medworld.settings",
-        "peekOfCode": "MEDIA_URL = '/user/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media/')\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.1/howto/static-files/\nSTATIC_URL = '/static/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static/')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\nEMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'",
+        "peekOfCode": "MEDIA_URL = '/media/'\nMEDIA_ROOT = os.path.join(BASE_DIR, 'media/')\n# Static files (CSS, JavaScript, Images)\n# https://docs.djangoproject.com/en/5.1/howto/static-files/\nSTATIC_URL = '/static/'\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static/')\n# Default primary key field type\n# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\nEMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'",
         "detail": "medworld.settings",
         "documentation": {}
     },
@@ -2579,12 +2944,75 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "notifications.migrations.0001_initial",
+        "description": "notifications.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='FirebaseToken',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),",
+        "detail": "notifications.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
         "label": "NotificationsConfig",
         "kind": 6,
         "importPath": "notifications.apps",
         "description": "notifications.apps",
-        "peekOfCode": "class NotificationsConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'notifications'",
+        "peekOfCode": "class NotificationsConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'notifications'\n    def ready(self):\n        from .scheduler import start_scheduler\n        import notifications.firebase_config\n        start_scheduler()",
         "detail": "notifications.apps",
+        "documentation": {}
+    },
+    {
+        "label": "BASE_DIR",
+        "kind": 5,
+        "importPath": "notifications.firebase_config",
+        "description": "notifications.firebase_config",
+        "peekOfCode": "BASE_DIR = os.path.dirname(os.path.abspath(__file__))\n# Construct the full path to the service account key JSON file\njson_path = os.path.join(BASE_DIR, \"push-notification-5b47e-firebase-adminsdk-wrd04-6b83bf2a4e.json\")\nprint(\"json_path\",json_path)\n# Initialize Firebase with the absolute path\ncred = credentials.Certificate(json_path)\nfirebase_admin.initialize_app(cred)",
+        "detail": "notifications.firebase_config",
+        "documentation": {}
+    },
+    {
+        "label": "json_path",
+        "kind": 5,
+        "importPath": "notifications.firebase_config",
+        "description": "notifications.firebase_config",
+        "peekOfCode": "json_path = os.path.join(BASE_DIR, \"push-notification-5b47e-firebase-adminsdk-wrd04-6b83bf2a4e.json\")\nprint(\"json_path\",json_path)\n# Initialize Firebase with the absolute path\ncred = credentials.Certificate(json_path)\nfirebase_admin.initialize_app(cred)",
+        "detail": "notifications.firebase_config",
+        "documentation": {}
+    },
+    {
+        "label": "cred",
+        "kind": 5,
+        "importPath": "notifications.firebase_config",
+        "description": "notifications.firebase_config",
+        "peekOfCode": "cred = credentials.Certificate(json_path)\nfirebase_admin.initialize_app(cred)",
+        "detail": "notifications.firebase_config",
+        "documentation": {}
+    },
+    {
+        "label": "FirebaseToken",
+        "kind": 6,
+        "importPath": "notifications.models",
+        "description": "notifications.models",
+        "peekOfCode": "class FirebaseToken(models.Model):\n    user = models.ForeignKey(User, on_delete=models.CASCADE)\n    token = models.CharField(max_length=255, unique=True)\n    created_at = models.DateTimeField(auto_now_add=True)\n    def __str__(self):\n        return self.token",
+        "detail": "notifications.models",
+        "documentation": {}
+    },
+    {
+        "label": "start_scheduler",
+        "kind": 2,
+        "importPath": "notifications.scheduler",
+        "description": "notifications.scheduler",
+        "peekOfCode": "def start_scheduler():\n    scheduler = BackgroundScheduler()\n    scheduler.add_job(send_visible_notifications,  trigger=IntervalTrigger(seconds=1),\n                       id=\"send_visible_notifications\",\n        name=\"Check new notification\",\n        replace_existing=True,)  # Run every minute\n    scheduler.start()\n    print(\"notifications Scheduler started...\")\n    # Shut down the scheduler when Django exits\n    import atexit",
+        "detail": "notifications.scheduler",
+        "documentation": {}
+    },
+    {
+        "label": "send_firebase_notification",
+        "kind": 2,
+        "importPath": "notifications.utils",
+        "description": "notifications.utils",
+        "peekOfCode": "def send_firebase_notification(token, title, body, data=None):\n    # Ensure all values in the data dictionary are strings\n    expo_url = \"https://exp.host/--/api/v2/push/send\"\n    payload = {\n        \"to\": token,\n        \"title\": title,\n        \"body\": body,\n        \"data\": data or {},  # Optional additional data\n    }\n    headers = {\"Content-Type\": \"application/json\"}",
+        "detail": "notifications.utils",
         "documentation": {}
     },
     {
@@ -2619,7 +3047,34 @@
         "kind": 2,
         "importPath": "notifications.views",
         "description": "notifications.views",
-        "peekOfCode": "def mark_sound_played(request, pk):\n    try:\n        notification = Notification.objects.get(pk=pk, user=request.user)\n        notification.is_sound_played = True\n        notification.save()\n        return Response({\"message\": \"Sound marked as played\"}, status=status.HTTP_200_OK)\n    except Notification.DoesNotExist:\n        return Response({\"error\": \"Notification not found\"}, status=status.HTTP_404_NOT_FOUND)",
+        "peekOfCode": "def mark_sound_played(request, pk):\n    try:\n        notification = Notification.objects.get(pk=pk, user=request.user)\n        notification.is_sound_played = True\n        notification.save()\n        return Response({\"message\": \"Sound marked as played\"}, status=status.HTTP_200_OK)\n    except Notification.DoesNotExist:\n        return Response({\"error\": \"Notification not found\"}, status=status.HTTP_404_NOT_FOUND)\nfrom firebase_admin import messaging\ndef send_firebase_notification(token, title, body, data=None):",
+        "detail": "notifications.views",
+        "documentation": {}
+    },
+    {
+        "label": "send_firebase_notification",
+        "kind": 2,
+        "importPath": "notifications.views",
+        "description": "notifications.views",
+        "peekOfCode": "def send_firebase_notification(token, title, body, data=None):\n    \"\"\"\n    Send a notification to a single device using Firebase Cloud Messaging (FCM).\n    \"\"\"\n    try:\n        # Create the message payload\n        message = messaging.Message(\n            notification=messaging.Notification(\n                title=title,\n                body=body,",
+        "detail": "notifications.views",
+        "documentation": {}
+    },
+    {
+        "label": "save_fcm_token",
+        "kind": 2,
+        "importPath": "notifications.views",
+        "description": "notifications.views",
+        "peekOfCode": "def save_fcm_token(request):\n    if request.method == \"POST\":\n        try:\n            token = request.data.get(\"expo_token\")\n            print(\"token\",token)\n            user_id = request.user\n            if not token:\n                return JsonResponse({\"error\": \"Token is required\"}, status=400)\n            # Save or update the token\n            FirebaseToken.objects.update_or_create(user=user_id, defaults={\"token\": token})",
+        "detail": "notifications.views",
+        "documentation": {}
+    },
+    {
+        "label": "send_visible_notifications",
+        "kind": 2,
+        "importPath": "notifications.views",
+        "description": "notifications.views",
+        "peekOfCode": "def send_visible_notifications():\n    # Fetch all notifications that are visible and not sent\n    now_time = now()\n    notifications = Notification.objects.filter(is_read=False, is_sound_played=False, visible_at__lte=now_time )\n    if notifications: \n        for notification in notifications:\n            # Get the user's FCM tokens\n            tokens = FirebaseToken.objects.filter(user=notification.user).values_list(\"token\", flat=True)\n            # Send notification to each token\n            for token in tokens:",
         "detail": "notifications.views",
         "documentation": {}
     },
@@ -2723,6 +3178,51 @@
         "documentation": {}
     },
     {
+        "label": "get_all_subscription",
+        "kind": 2,
+        "importPath": "subscriptions.views",
+        "description": "subscriptions.views",
+        "peekOfCode": "def get_all_subscription(request):\n    # Get or create the user's subscription object\n    subscription = Subscription.objects.all()\n    # Check if the user already has a Stripe customer ID\n    subscription_serializer = SubscriptionSerializer(subscription, many=True)\n    return Response(subscription_serializer.data, status=200)\ndef get_invoices_by_subscription(subscription_id):\n    \"\"\"\n    Fetch all invoices associated with a subscription.\n    \"\"\"",
+        "detail": "subscriptions.views",
+        "documentation": {}
+    },
+    {
+        "label": "get_invoices_by_subscription",
+        "kind": 2,
+        "importPath": "subscriptions.views",
+        "description": "subscriptions.views",
+        "peekOfCode": "def get_invoices_by_subscription(subscription_id):\n    \"\"\"\n    Fetch all invoices associated with a subscription.\n    \"\"\"\n    try:\n        invoices = stripe.Invoice.list(subscription=subscription_id)\n        return invoices\n    except stripe.error.StripeError as e:\n        # Handle Stripe API errors\n        print(f\"Stripe Error: {e}\")",
+        "detail": "subscriptions.views",
+        "documentation": {}
+    },
+    {
+        "label": "get_total_revenue_by_subscription",
+        "kind": 2,
+        "importPath": "subscriptions.views",
+        "description": "subscriptions.views",
+        "peekOfCode": "def get_total_revenue_by_subscription(subscription_id):\n    \"\"\"\n    Calculate the total revenue for a specific subscription based on paid invoices.\n    \"\"\"\n    invoices = get_invoices_by_subscription(subscription_id)\n    if not invoices:\n        return 0  # Return 0 if the Stripe API call fails\n    total_revenue = 0\n    for invoice in invoices.auto_paging_iter():\n        if invoice.get(\"paid\", False):  # Safely access \"paid\" to avoid KeyError",
+        "detail": "subscriptions.views",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_all_for_dashboard",
+        "kind": 2,
+        "importPath": "subscriptions.views",
+        "description": "subscriptions.views",
+        "peekOfCode": "def calculate_all_for_dashboard(request):\n    \"\"\"\n    Calculate the revenue for all users and classify them into free and pro users.\n    \"\"\"\n    # Step 1: Fetch all Stripe subscriptions\n    subscriptions = Subscription.objects.all()\n    if not subscriptions:\n        return Response({\"error\": \"Failed to fetch subscriptions from Stripe\"}, status=500)\n    # Step 2: Classify users\n    pro_user_count = Subscription.objects.filter(is_active=True).count()  # Count active users",
+        "detail": "subscriptions.views",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_yearly_revenue",
+        "kind": 2,
+        "importPath": "subscriptions.views",
+        "description": "subscriptions.views",
+        "peekOfCode": "def calculate_yearly_revenue(request):\n    \"\"\"\n    Calculate monthly revenue starting from the first subscription year to the current year.\n    \"\"\"\n    # Step 1: Fetch all subscriptions from the database\n    subscriptions = Subscription.objects.all()\n    if not subscriptions:\n        return Response({\"error\": \"No subscriptions found\"}, status=404)\n    # Step 2: Calculate revenue grouped by year and month\n    yearly_monthly_revenue = defaultdict(lambda: {month: 0 for month in range(1, 13)})  # Year -> Month -> Revenue",
+        "detail": "subscriptions.views",
+        "documentation": {}
+    },
+    {
         "label": "stripe.api_key",
         "kind": 5,
         "importPath": "subscriptions.views",
@@ -2738,6 +3238,51 @@
         "description": "subscriptions.views",
         "peekOfCode": "endpoint_secret = 'whsec_211c66fa5205c7c0a438eb4d3552b3bfb9ca4014e7cd308ad7928c5f8ad02e7c'\n@api_view(['POST'])\n@authentication_classes([TokenAuthentication])\n@permission_classes([IsAuthenticated])\ndef create_or_retrieve_customer(request):\n    user = request.user\n    # Get or create the user's subscription object\n    subscription, created = Subscription.objects.get_or_create(user=user)\n    # Check if the user already has a Stripe customer ID\n    if not subscription.stripe_customer_id:",
         "detail": "subscriptions.views",
+        "documentation": {}
+    },
+    {
+        "label": "random_sleep",
+        "kind": 2,
+        "importPath": "freddy",
+        "description": "freddy",
+        "peekOfCode": "def random_sleep(min_time=1, max_time=3):\n    time.sleep(random.uniform(min_time, max_time))\nproxy_list = [\n    '103.96.106.230:1080',\n    # '103.49.202.252:80',\n    # '103.86.109.38:80'\n]\ndef get_random_proxy():\n    return random.choice(proxy_list)\ncookie_file_path = 'cookies.pkl'",
+        "detail": "freddy",
+        "documentation": {}
+    },
+    {
+        "label": "get_random_proxy",
+        "kind": 2,
+        "importPath": "freddy",
+        "description": "freddy",
+        "peekOfCode": "def get_random_proxy():\n    return random.choice(proxy_list)\ncookie_file_path = 'cookies.pkl'\ndef extract_posts():\n    # display = Display(visible=0, size=(800, 600))\n    # display.start()\n    # Setup Chrome options\n    options = Options()\n    options = webdriver.ChromeOptions()\n    options.add_argument(\"user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36\")",
+        "detail": "freddy",
+        "documentation": {}
+    },
+    {
+        "label": "extract_posts",
+        "kind": 2,
+        "importPath": "freddy",
+        "description": "freddy",
+        "peekOfCode": "def extract_posts():\n    # display = Display(visible=0, size=(800, 600))\n    # display.start()\n    # Setup Chrome options\n    options = Options()\n    options = webdriver.ChromeOptions()\n    options.add_argument(\"user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36\")\n    # options.add_argument('--headless')  # Runs Chrome in headless mode.\n    # options.add_argument('--no-sandbox')  # Bypass OS security model\n    # options.add_argument('--disable-dev-shm-usage')",
+        "detail": "freddy",
+        "documentation": {}
+    },
+    {
+        "label": "proxy_list",
+        "kind": 5,
+        "importPath": "freddy",
+        "description": "freddy",
+        "peekOfCode": "proxy_list = [\n    '103.96.106.230:1080',\n    # '103.49.202.252:80',\n    # '103.86.109.38:80'\n]\ndef get_random_proxy():\n    return random.choice(proxy_list)\ncookie_file_path = 'cookies.pkl'\ndef extract_posts():\n    # display = Display(visible=0, size=(800, 600))",
+        "detail": "freddy",
+        "documentation": {}
+    },
+    {
+        "label": "cookie_file_path",
+        "kind": 5,
+        "importPath": "freddy",
+        "description": "freddy",
+        "peekOfCode": "cookie_file_path = 'cookies.pkl'\ndef extract_posts():\n    # display = Display(visible=0, size=(800, 600))\n    # display.start()\n    # Setup Chrome options\n    options = Options()\n    options = webdriver.ChromeOptions()\n    options.add_argument(\"user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36\")\n    # options.add_argument('--headless')  # Runs Chrome in headless mode.\n    # options.add_argument('--no-sandbox')  # Bypass OS security model",
+        "detail": "freddy",
         "documentation": {}
     },
     {

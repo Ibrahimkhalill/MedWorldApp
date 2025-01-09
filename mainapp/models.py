@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 from django.db import transaction
 from datetime import timedelta, datetime
-
+from django.utils import timezone
 
 class OTP(models.Model):
     email = models.EmailField(null=True, blank=True)
@@ -142,10 +142,12 @@ class Subscription(models.Model):
     def activate_free_trial(self, duration_days=30):
         """Activate free trial for a specific duration."""
         now = timezone.now()  # Use timezone-aware datetime
+        print(f"Current time: {now}")
         self.free_trial = True
         self.free_trial_end = now + timedelta(days=duration_days)
+        print(f"Free trial end date: {self.free_trial_end}")
         self.save()
-
+        
     def activate_subscription(self, duration_days=30):
         """Activate subscription for a specific duration."""
         now = timezone.now()  # Use timezone-aware datetime
@@ -169,3 +171,14 @@ class Subscription(models.Model):
             return "Subscription expired"
 
         return "Active"
+    
+    
+    
+    
+class TermsCondition(models.Model):
+    text = models.TextField(blank=True, null=True)
+    
+    
+
+class PrivacyPolicy(models.Model):
+    text = models.TextField(blank=True, null=True)

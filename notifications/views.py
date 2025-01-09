@@ -93,3 +93,94 @@ def mark_sound_played(request, pk):
     except Notification.DoesNotExist:
         return Response({"error": "Notification not found"}, status=status.HTTP_404_NOT_FOUND)
     
+    
+
+
+from firebase_admin import messaging
+
+def send_firebase_notification(token, title, body, data=None):
+    """
+    Send a notification to a single device using Firebase Cloud Messaging (FCM).
+    """
+    try:
+        # Create the message payload
+        message = messaging.Message(
+            notification=messaging.Notification(
+                title=title,
+                body=body,
+            ),
+            data=data or {},  # Optional custom data
+            token=token,
+        )
+
+        # Send the notification
+        response = messaging.send(message)
+        print("Successfully sent message:", response)
+        return {"success": True, "response": response}
+    except Exception as e:
+        print("Error sending notification:", e)
+        return {"success": False, "error": str(e)}
+
+
+
+from django.db import models
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .models import FirebaseToken
+
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated]) 
+def save_fcm_token(request):
+    if request.method == "POST":
+        try:
+           
+            token = request.data.get("expo_token")
+            print("token",token)
+            user_id = request.user
+           
+
+            if not token:
+                return JsonResponse({"error": "Token is required"}, status=400)
+
+            # Save or update the token
+            FirebaseToken.objects.update_or_create(user=user_id, defaults={"token": token})
+
+            return JsonResponse({"message": "Token saved successfully!"})
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
+
+
+
+from django.http import JsonResponse
+from .models import FirebaseToken
+from .utils import send_firebase_notification  # Import the function from utils
+
+def send_visible_notifications():
+    # Fetch all notifications that are visible and not sent
+    now_time = now()
+    notifications = Notification.objects.filter(is_read=False, is_sound_played=False, visible_at__lte=now_time )
+    if notifications: 
+        for notification in notifications:
+            # Get the user's FCM tokens
+            tokens = FirebaseToken.objects.filter(user=notification.user).values_list("token", flat=True)
+
+            # Send notification to each token
+            for token in tokens:
+                send_firebase_notification(
+                    token=token,
+                    title=notification.title,
+                    body=notification.message,
+                    data= notification.data
+                )
+
+            # Mark the notification as sent
+            notification.is_sound_played = True
+            notification.save()
+            
+            print("notification is send", tokens)
+    print("check notification")

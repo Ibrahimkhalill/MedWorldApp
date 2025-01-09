@@ -68,11 +68,14 @@ class NotificationSerializer(serializers.ModelSerializer):
         
         
 class SubscriptionSerializer(serializers.ModelSerializer):
+    user_profile = UserProfileSerializer(source='user.userprofile', read_only=True)  # Access related UserProfile
+
     class Meta:
         model = Subscription
         fields = [
             'id',
             'user',
+            'user_profile',  # Include the UserProfile data here
             'stripe_customer_id',
             'stripe_subscription_id',
             'is_active',
@@ -84,6 +87,20 @@ class SubscriptionSerializer(serializers.ModelSerializer):
             'updated_at',
         ]
         read_only_fields = ['created_at', 'updated_at']
+
         
 class CheckEmailSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True, allow_blank=False)
+    
+    
+    
+    
+class TermsConditionSeriaLizer(serializers.ModelSerializer):
+    class Meta:
+        model = TermsCondition
+        fields = ['id', 'text']
+        
+class PrivacyPolicySeriaLizer(serializers.ModelSerializer):
+    class Meta:
+        model = PrivacyPolicy
+        fields = ['id', 'text']

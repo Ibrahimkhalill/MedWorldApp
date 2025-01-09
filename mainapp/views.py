@@ -280,7 +280,7 @@ def course_view(request, pk=None):
                 return Response(serializer.data)
             except Course.DoesNotExist:
                 return Response({'error': 'Course not found'}, status=status.HTTP_404_NOT_FOUND)
-        courses = Course.objects.filter(user=request.user)
+        courses = Course.objects.filter(user=request.user).order_by('-date')
         serializer = CourseSerializer(courses, many=True)
         return Response(serializer.data)
 
@@ -317,12 +317,12 @@ def budget_view(request, pk=None):
     if request.method == 'GET':
         if pk:
             try:
-                budget = Budget.objects.get(pk=pk, user=request.user)
+                budget = Budget.objects.get(pk=pk, user=request.user)   
                 serializer = BudgetSerializer(budget)
                 return Response(serializer.data)
             except Budget.DoesNotExist:
                 return Response({'error': 'Budget not found'}, status=status.HTTP_404_NOT_FOUND)
-        budgets = Budget.objects.filter(user=request.user)
+        budgets = Budget.objects.filter(user=request.user).order_by('-date')
         serializer = BudgetSerializer(budgets, many=True)
         return Response(serializer.data)
 
@@ -704,3 +704,71 @@ def send_support_email(request):
 
     return JsonReResponsesponse({"error": "Invalid request method."}, status=405)
 
+
+
+
+
+# API for TermsCondition
+@api_view(['GET', 'POST', 'PUT'])
+def terms_condition_api(request, pk=None):
+    # GET: Retrieve all terms or a specific term by ID
+    if request.method == 'GET':
+       
+        terms = TermsCondition.objects.all()
+        serializer = TermsConditionSeriaLizer(terms, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # POST: Create a new term
+    elif request.method == 'POST':
+        serializer = TermsConditionSeriaLizer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # PUT: Update an existing term by ID
+    elif request.method == 'PUT':
+        if not pk:
+            return Response({'error': 'ID is required for update'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            term = TermsCondition.objects.get(pk=pk)
+            serializer = TermsConditionSeriaLizer(term, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except TermsCondition.DoesNotExist:
+            return Response({'error': 'Term not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+# API for PrivacyPolicy
+@api_view(['GET', 'POST', 'PUT'])
+def privacy_policy_api(request, pk=None):
+    # GET: Retrieve all policies or a specific policy by ID
+    if request.method == 'GET':
+    
+        policies = PrivacyPolicy.objects.all()
+        serializer = PrivacyPolicySeriaLizer(policies, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # POST: Create a new policy
+    elif request.method == 'POST':
+        serializer = PrivacyPolicySeriaLizer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # PUT: Update an existing policy by ID
+    elif request.method == 'PUT':
+        if not pk:
+            return Response({'error': 'ID is required for update'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            policy = PrivacyPolicy.objects.get(pk=pk)
+            serializer = PrivacyPolicySeriaLizer(policy, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except PrivacyPolicy.DoesNotExist:
+            return Response({'error': 'Policy not found'}, status=status.HTTP_404_NOT_FOUND)

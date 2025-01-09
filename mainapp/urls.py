@@ -7,6 +7,7 @@ from notifications.views import *
 urlpatterns = [
   
    path("api/login/", login),
+   path("api/admin-login/", admin_login),
    path('api/check-email/', check_email_availability, name='check-email'),
    path("api/register/", register),
    path("api/delete_user_and_related_data/", delete_user_and_related_data),
@@ -43,6 +44,7 @@ urlpatterns = [
     path('api/notifications/<int:pk>/read/', mark_notification_as_read, name='mark-notification-as-read'),
     path('api/notifications/unread-count/', unread_notification_count, name='unread-notification-count'),
     path('api/notifications/<int:pk>/sound-played/', mark_sound_played, name='unread-sound-notification'),
+    path('api/save-expo-token/', save_fcm_token, name='save_fcm_token'),
     
     path('api/create_or_retrieve_customer/', create_or_retrieve_customer, name='create_or_retrieve_customer'),
     path('api/payment-sheet/', payment_sheet, name='payment_sheet'),
@@ -51,8 +53,19 @@ urlpatterns = [
     path('api/checkout/cancel/', checkout_cencel, name='checkout_cencel'),
     path('webhook/',stripe_webhook, name='webhook'),
     path('api/get_subscription/',get_subscription, name='get_subscription'),
+    path('api/get_all_subscription/',get_all_subscription),
+    
+    
+    path('api/calculate_all_for_dashborad/',calculate_all_for_dashboard),
+    path('api/calculate_yearly_revenue/',calculate_yearly_revenue),
+    path('api/yearly_user_data_view/',yearly_user_data_view),
 
     path('api/send-support-email/', send_support_email, name='send_support_email'),
+    
+    path('api/terms-condition/', terms_condition_api, name='terms_condition_list'),
+    path('api/terms-condition/<int:pk>/', terms_condition_api, name='terms_condition_detail'),
+    path('api/privacy-policy/', privacy_policy_api, name='privacy_policy_list'),
+    path('api/privacy-policy/<int:pk>/', privacy_policy_api, name='privacy_policy_detail'),
    
 ]
 

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure--l%rm*&6sp(j*hn93$dvjd!(jhloy0iq_g@0f^)#433(7wq3a^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["e418-115-127-156-9.ngrok-free.app","127.0.0.1"]
+ALLOWED_HOSTS = ["e044-115-127-156-9.ngrok-free.app","127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -44,10 +44,12 @@ INSTALLED_APPS = [
     'background_task',
     'notifications',
     'subscriptions',
-    'authentications'
+    'authentications',
+    'corsheaders'
 
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -55,6 +57,7 @@ REST_FRAMEWORK = {
     ],
 }
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -140,7 +143,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-MEDIA_URL = '/user/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Static files (CSS, JavaScript, Images)

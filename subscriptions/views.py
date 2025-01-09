@@ -28,10 +28,10 @@ from background_task import background
 import requests
 import stripe
 import json
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.http import JsonResponse , HttpResponse
-
+from collections import defaultdict
+from datetime import datetime
 # Set your Stripe secret key
 stripe.api_key = "sk_test_51QRTfHALRymUd61pnuUKrQxQMdEbZu7K5By0gbsyVHyR0BYQbryEq7PbSwycaGPURUBa29HGzf6SArPRzM19cH0B004mfG89ye"
 
@@ -292,3 +292,123 @@ def check_subscription_status():
         print(f"Subscription expired for user {subscription.user.username}")
 
     print("Checked free trial and subscription statuses.")
+    
+    
+
+@api_view(['GET'])
+
+def get_all_subscription(request):
+   
+    # Get or create the user's subscription object
+    subscription = Subscription.objects.all()
+    # Check if the user already has a Stripe customer ID
+    subscription_serializer = SubscriptionSerializer(subscription, many=True)
+
+    return Response(subscription_serializer.data, status=200)
+
+
+def get_invoices_by_subscription(subscription_id):
+    """
+    Fetch all invoices associated with a subscription.
+    """
+    try:
+        invoices = stripe.Invoice.list(subscription=subscription_id)
+        return invoices
+    except stripe.error.StripeError as e:
+        # Handle Stripe API errors
+        print(f"Stripe Error: {e}")
+        return None
+
+
+def get_total_revenue_by_subscription(subscription_id):
+    """
+    Calculate the total revenue for a specific subscription based on paid invoices.
+    """
+    invoices = get_invoices_by_subscription(subscription_id)
+    if not invoices:
+        return 0  # Return 0 if the Stripe API call fails
+
+    total_revenue = 0
+    for invoice in invoices.auto_paging_iter():
+        if invoice.get("paid", False):  # Safely access "paid" to avoid KeyError
+            total_revenue += invoice.get("amount_paid", 0) / 100  # Stripe amounts are in cents
+
+    return total_revenue
+
+
+@api_view(["GET"])
+def calculate_all_for_dashboard(request):
+    """
+    Calculate the revenue for all users and classify them into free and pro users.
+    """
+    # Step 1: Fetch all Stripe subscriptions
+    subscriptions = Subscription.objects.all()
+    if not subscriptions:
+        return Response({"error": "Failed to fetch subscriptions from Stripe"}, status=500)
+
+    # Step 2: Classify users
+    pro_user_count = Subscription.objects.filter(is_active=True).count()  # Count active users
+    free_user_count = Subscription.objects.filter(free_trial_end__isnull=False).count()
+
+    # Step 3: Calculate total revenue
+    total_revenue = 0
+    for subscription in subscriptions:
+        if subscription.stripe_subscription_id is not None:
+            subscription_revenue = get_total_revenue_by_subscription(subscription.stripe_subscription_id)
+            total_revenue += subscription_revenue
+
+    # Step 4: Build response
+    response = {
+        "free_user": free_user_count,
+        "pro_user": pro_user_count,
+        "total_revenue": round(total_revenue, 2),  # Ensure total revenue is rounded to 2 decimal places
+    }
+
+    return Response(response, status=200)
+
+
+@api_view(["GET"])
+def calculate_yearly_revenue(request):
+    """
+    Calculate monthly revenue starting from the first subscription year to the current year.
+    """
+    # Step 1: Fetch all subscriptions from the database
+    subscriptions = Subscription.objects.all()
+    if not subscriptions:
+        return Response({"error": "No subscriptions found"}, status=404)
+
+    # Step 2: Calculate revenue grouped by year and month
+    yearly_monthly_revenue = defaultdict(lambda: {month: 0 for month in range(1, 13)})  # Year -> Month -> Revenue
+
+    first_year = datetime.now().year  # Initialize with the current year
+    for subscription in subscriptions:
+        if subscription.stripe_subscription_id is not None:
+            invoices = get_invoices_by_subscription(subscription.stripe_subscription_id)
+            if not invoices:
+                continue
+
+            for invoice in invoices.auto_paging_iter():
+                if invoice.get("paid", False):  # Only consider paid invoices
+                    created_date = datetime.fromtimestamp(invoice["created"])
+                    year = created_date.year
+                    month = created_date.month
+                    yearly_monthly_revenue[year][month] += invoice.get("amount_paid", 0) / 100  # Convert cents to dollars
+                    first_year = min(first_year, year)  # Update the first year if earlier
+
+    # Step 3: Prepare data from the first year to the current year
+    current_year = datetime.now().year
+    all_revenue_data = []
+
+    for year in range(first_year, current_year + 1):
+        data = [yearly_monthly_revenue[year].get(month, 0) for month in range(1, 13)]
+        all_revenue_data.append({
+            "year": year,
+            "data": data
+        })
+
+    # Step 4: Build response
+    response = {
+        "all_revenue_data": all_revenue_data
+    }
+
+    return Response(response, status=200)

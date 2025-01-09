@@ -40,28 +40,46 @@ from django.http import JsonResponse , HttpResponse
 @api_view(["POST"])
 def register(request):
     if request.method == "POST":
-        email = request.data.get("email")  # Use email as the username
+        email = request.data.get("email")
         password = request.data.get("password")
         userName = request.data.get("userName")
-        specialty= request.data.get("specialty")
-        residencyDuration= request.data.get("residencyDuration")
-        residencyYear= request.data.get("residencyYear")
-       
-        
+        specialty = request.data.get("specialty")
+        residencyDuration = request.data.get("residencyDuration")
+        residencyYear = request.data.get("residencyYear")
+
         if not email or not password:
             return Response({"error": "Email and password are required"}, status=status.HTTP_400_BAD_REQUEST)
-    
-        
-        user = User.objects.create_user(username=email, password=password)
-        user.save()
-        
-        UserProfile.objects.create(user=user, email=email,username=userName,specialty=specialty,residencyDuration=residencyDuration,residencyYear=residencyYear )
-        subscription = Subscription.objects.create(user=user)
-        subscription.activate_free_trial()  # Call the instance meth
-        token, _ = Token.objects.get_or_create(user=user)
-        return Response({
-            "token": token.key,  # Return the token key
-        }, status=status.HTTP_201_CREATED)
+
+        try:
+            # Create user
+            user = User.objects.create_user(username=email, password=password)
+            user.save()
+
+            # Create user profile
+            UserProfile.objects.create(
+                user=user,
+                email=email,
+                username=userName,
+                specialty=specialty,
+                residencyDuration=residencyDuration,
+                residencyYear=residencyYear,
+            )
+
+            # Create subscription and activate free trial
+            subscription = Subscription.objects.create(user=user)
+            subscription.activate_free_trial()
+
+            # Generate token
+            token, _ = Token.objects.get_or_create(user=user)
+
+            return Response({"token": token.key}, status=status.HTTP_201_CREATED)
+
+        except IntegrityError:
+            return Response({"error": "A user with this email already exists"}, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
        
 
@@ -146,6 +164,44 @@ def login(request):
     return Response({
         "token": token.key,  # Return the token key
     }, status=status.HTTP_200_OK)
+    
+
+
+@api_view(["POST"])
+def admin_login(request):
+    email = request.data.get("email")
+    password = request.data.get("password")
+
+    if not email or not password:
+        return Response({"error": "Email and password are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Authenticate the user
+    user = authenticate(request, username=email, password=password)
+
+    if not user:
+        return Response({"error": "Email or Password is wrong!"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    if not user.is_active:
+        return Response({"error": "Account is inactive"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    # Check if the user is an admin or staff
+    is_admin = user.is_superuser
+    is_staff = user.is_staff
+
+    if not is_admin and not is_staff:
+        return Response({"error": "Email or Password is wrong!"}, status=status.HTTP_403_FORBIDDEN)
+
+    # Generate or retrieve the token
+    token, _ = Token.objects.get_or_create(user=user)
+
+    return Response({
+        "token": token.key,  # Return the token key
+        "is_admin": is_admin,
+        "is_staff": is_staff,
+    }, status=status.HTTP_200_OK)
+    
+    
+    
 
 
 @api_view(["POST"])
@@ -282,7 +338,7 @@ def refresh_access_token(request):
      
 
 
-@api_view(["POST"])
+@api_view(["DELETE"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def delete_user_and_related_data(request):
@@ -291,7 +347,7 @@ def delete_user_and_related_data(request):
         with transaction.atomic():
             user = request.user
             user.delete()
-            print("User and all related data deleted successfully.")
+            Response({"messages":"User and all related data deleted successfully."},status=status.HTTP_200_OK)
 
     except User.DoesNotExist:
         print("User does not exist.")
@@ -313,3 +369,66 @@ def check_email_availability(request):
     email_exists = User.objects.filter(username=email).exists()
 
     return Response({'exists': email_exists}, status=status.HTTP_200_OK)
+
+
+
+from django.db.models.functions import TruncMonth, TruncYear
+from django.db.models import Count
+from django.contrib.auth.models import User
+from datetime import datetime
+
+def calculate_users_by_year():
+    # Get the earliest user creation year
+    first_user = User.objects.order_by("date_joined").first()
+    if not first_user:
+        return {"error": "No users found."}
+
+    starting_year = first_user.date_joined.year
+    current_year = datetime.now().year
+
+    # Prepare the result
+    yearly_data = {}
+
+    for year in range(starting_year, current_year + 1):
+        # Query users for the current year grouped by month
+        monthly_data = (
+            User.objects.filter(date_joined__year=year)
+            .annotate(month=TruncMonth("date_joined"))
+            .values("month")
+            .annotate(count=Count("id"))
+            .order_by("month")
+        )
+
+        # Prepare the monthly data in the desired format
+        months = [
+            {"name": "Jan", "value": 0},
+            {"name": "Feb", "value": 0},
+            {"name": "Mar", "value": 0},
+            {"name": "Apr", "value": 0},
+            {"name": "May", "value": 0},
+            {"name": "Jun", "value": 0},
+            {"name": "Jul", "value": 0},
+            {"name": "Aug", "value": 0},
+            {"name": "Sep", "value": 0},
+            {"name": "Oct", "value": 0},
+            {"name": "Nov", "value": 0},
+            {"name": "Dec", "value": 0},
+        ]
+
+        # Map database data to the months array
+        for data in monthly_data:
+            month_index = data["month"].month - 1  # Convert month to 0-based index
+            months[month_index]["value"] = data["count"]
+
+        # Add the year's data to the result
+        yearly_data[str(year)] = months
+
+    return yearly_data
+
+@api_view(["GET"])
+def yearly_user_data_view(request):
+    try:
+        data = calculate_users_by_year()
+        return Response(data, status=200)
+    except Exception as e:
+        return Response({"error": str(e)}, status=500)

@@ -4,6 +4,7 @@ from django.utils import timezone
 from datetime import datetime
 from mainapp.models import Subscription
 
+
 def check_subscription_status():
     """
     Automatically check and deactivate expired free trials or subscriptions.
@@ -42,6 +43,7 @@ def start_scheduler():
         name="Check and deactivate expired subscriptions",
         replace_existing=True,
     )
+   
 
     scheduler.start()
     print("Scheduler started...")
