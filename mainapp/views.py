@@ -12,11 +12,6 @@ from .models import OTP, PercantageSurgery, Subscription, Surgery, UserProfile
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string 
-from authentications.otpGenarate import generate_otp
-from django.utils import timezone
-import django.http
 from openpyxl import Workbook
 from .models import Surgery
 from fpdf import FPDF

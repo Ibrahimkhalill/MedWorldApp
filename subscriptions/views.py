@@ -1,35 +1,20 @@
-from django.shortcuts import render
-from django.contrib.auth.models import User
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework import status
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.authtoken.models import Token
 from mainapp.serializers import *
-from django.contrib.auth import authenticate
 from django.shortcuts import get_object_or_404
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from mainapp.models import OTP, PercantageSurgery, Subscription, Surgery, UserProfile
+from mainapp.models import Subscription, UserProfile
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import authentication_classes, permission_classes
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string 
-from django.utils import timezone
-import django.http
-from openpyxl import Workbook
-from mainapp.models import Surgery
-from fpdf import FPDF
-from django.utils.timezone import now
-from datetime import timedelta
+
 
 from background_task import background
 # Create your views here.
-import requests
 import stripe
-import json
+
 from rest_framework.response import Response
-from django.http import JsonResponse , HttpResponse
+from django.http import HttpResponse
 from collections import defaultdict
 from datetime import datetime
 # Set your Stripe secret key
