@@ -6,4 +6,4 @@ __pycache__/
 *.env
 venv310/
 .env
-*.db
+*.dbsecrets/credentials.json
