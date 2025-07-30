@@ -145,8 +145,7 @@ def surgery_view(request, pk=None):
                 surgery.date,
                 surgery.histology_description,
                 surgery.complications_description,
-                surgery.notes1,
-                surgery.notes2,
+               
             ]
             filled_fields = sum(1 for field in fields if field not in [None, ""])
             total_fields = len(fields)
@@ -233,7 +232,7 @@ def scientific_view(request, pk=None):
                 return Response(serializer.data)
             except Scientific.DoesNotExist:
                 return Response({'error': 'Scientific work not found'}, status=status.HTTP_404_NOT_FOUND)
-        scientifics = Scientific.objects.filter(user=request.user)
+        scientifics = Scientific.objects.filter(user=request.user).order_by('name')
         serializer = ScientificSerializer(scientifics, many=True)
         return Response(serializer.data)
 

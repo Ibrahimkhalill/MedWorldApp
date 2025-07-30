@@ -87,34 +87,40 @@ def register(request):
 def send_otp(request):
     if request.method == 'POST':
         email = request.data.get('email')
+        
+        if not email:
+            return Response({"error": "Email is required"}, status=400)
+        
         try:
-             if User.objects.filter(username=email).exists():
-                 print("kjfj")
-                 return Response({"error": "Email already exists"}, status=status.HTTP_400_BAD_REQUEST)
-             else:
-                  # Generate OTP
+            if User.objects.filter(username=email).exists():  # Or `.filter(email=email)` if that's what you use
+                print("❗ Email already exists")
+                return Response({"error": "Email already exists"}, status=status.HTTP_400_BAD_REQUEST)
+            else:
                 otp = generate_otp()
-                # Save OTP to database
                 OTP.objects.create(email=email, otp=otp)
                 
-                # Render the HTML template
-                html_content = render_to_string('otp_email_template.html', {'otp': otp, 'email':email})
+                print(f"✅ OTP generated: {otp}")
                 
-                # Send email
+                html_content = render_to_string('otp_email_template.html', {'otp': otp, 'email': email})
+                
                 msg = EmailMultiAlternatives(
                     subject='Your OTP Code',
                     body='This is an OTP email.',
-                    from_email='hijabpoint374@gmail.com',  # Sender's email address
+                    from_email='medworld@medworld.online',
                     to=[email],
                 )
                 msg.attach_alternative(html_content, "text/html")
-                msg.send(fail_silently=False)  
+                msg.send(fail_silently=False)
                 
+                print(f"📧 OTP sent to {email}")
                 return Response({'message': 'OTP sent to your email.'})
-           
+        
         except Exception as e:
+            print(f"🔥 Error sending OTP: {e}")
             return Response({'error': str(e)}, status=500)
+    
     return Response({'message': 'Invalid method.'})
+
 
 
 @api_view(["POST"])
@@ -203,52 +209,46 @@ def admin_login(request):
     
     
 
+import traceback
 
 @api_view(["POST"])
 def Password_reset_send_otp(request):
-   
     email = request.data.get('email')
     print(email)
 
     try:
-        # Check if the user exists
-        existing_user = User.objects.get(username=email)
-        
-        if existing_user:
-            print("existing_user", existing_user)
-            
-            # Generate OTP
-            otp = generate_otp()
-            
-            # Save OTP to the database (assuming OTP model has 'email' and 'otp' fields)
-            OTP.objects.create(email=email, otp=otp)
-            
-            # Prepare the HTML content for the OTP email
-            html_content = render_to_string('otp_email_template.html', {'otp': otp, 'email': email})
-            
-            # Prepare email message
-            msg = EmailMultiAlternatives(
-                subject='Your OTP Code',
-                body='This is an OTP email.',
-                from_email='hijabpoint374@gmail.com',  # Replace with a valid sender email
-                to=[email],
-            )
-            
-            msg.attach_alternative(html_content, "text/html")
-            
-            # Send email and ensure it is sent without errors
-            msg.send(fail_silently=False)
-            
-            return Response({'message': 'OTP sent to your email.'}, status=status.HTTP_200_OK)
-    
-    except User.DoesNotExist:
-        # Handle the case where the user does not exist
-        return Response({'message': 'The account you provided does not exist. Please try again with another account.'}, status=status.HTTP_400_BAD_REQUEST)
-    
+        existing_user = User.objects.filter(username=email).first()
+        print("existing_user", existing_user)
+
+        if not existing_user:
+            return Response({'message': 'No user found with this email.'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Generate OTP
+        otp = generate_otp()
+
+        # Save OTP to DB
+        OTP.objects.create(email=email, otp=otp)
+
+        # Load HTML email template
+        html_content = render_to_string('otp_email_template.html', {'otp': otp, 'email': email})
+
+        # Send the email
+        msg = EmailMultiAlternatives(
+            subject='Your OTP Code',
+            body='This is an OTP email.',
+            from_email='medworld@medworld.online',
+            to=[email],
+        )
+        msg.attach_alternative(html_content, "text/html")
+        msg.send(fail_silently=False)
+
+        return Response({'message': 'OTP sent to your email.'}, status=status.HTTP_200_OK)
+
     except Exception as e:
-        # Log the exception for debugging purposes (optional)
-        print(f"Error occurred: {e}")
-        return Response({'message': 'An unexpected error occurred. Please try again later.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        import traceback
+        print("🔴 Error in Password_reset_send_otp:")
+        traceback.print_exc()
+        return Response({'message': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     
 

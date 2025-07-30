@@ -24,14 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--l%rm*&6sp(j*hn93$dvjd!(jhloy0iq_g@0f^)#433(7wq3a^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["e044-115-127-156-9.ngrok-free.app","127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,6 +49,15 @@ INSTALLED_APPS = [
     'corsheaders'
 
 ]
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Medworld Admin",
+    "site_brand": "Medworld",
+    # Title on the login screen (19 chars max) (defaults to current_admin_site.site_header if absent or None)
+    "site_header": "Medworld",
+    "welcome_sign": "Welcome to the Medworld",
+}
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -90,8 +100,8 @@ WSGI_APPLICATION = 'medworld.wsgi.application'
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  # Set the access token lifetime to 1 hour
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),   # Optional: Set the refresh token lifetime (e.g., 7 days)
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=365),  # Set the access token lifetime to 1 hour
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=365),   # Optional: Set the refresh token lifetime (e.g., 7 days)
     'ROTATE_REFRESH_TOKENS': False,  # Optional: Whether to rotate refresh tokens
     'BLACKLIST_AFTER_ROTATION': False,  # Optional: Whether to blacklist old refresh tokens after rotation
     'ALGORITHM': 'HS256',  # The algorithm to use for encoding the tokens
@@ -157,12 +167,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'hijabpoint374@gmail.com'
+# EMAIL_HOST_PASSWORD = 'sbog hrdj icpg zodj'
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'hijabpoint374@gmail.com'
-EMAIL_HOST_PASSWORD = 'sbog hrdj icpg zodj'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_HOST = 'smtp.hostinger.com'
+EMAIL_PORT = 587  # Or use 465 if using SSL
+EMAIL_USE_TLS = True  # Use TLS for security
+EMAIL_HOST_USER = 'medworld@medworld.online'  # Your email address
+EMAIL_HOST_PASSWORD = 'aloneIbr@him516'  # Your email password
+DEFAULT_FROM_EMAIL = 'medworld@medworld.online'  # Default from address
 
 GOOGLE_SHEET_CREDS_JSON = "729859196271-iaj8ikvst39t6s4vppa5kfme3ohnifo1.apps.googleusercontent.com"
+
+
+

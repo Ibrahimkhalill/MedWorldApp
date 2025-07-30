@@ -78,7 +78,8 @@ class Scientific(models.Model):
 class Course(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     date = models.DateTimeField(blank=True, null=True)
-    name = models.CharField(max_length=255, blank=True, null=True)
+    name = models.CharField(max_length=400, blank=True, null=True)
+    location = models.TextField( blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.get_full_name() if self.user else 'Unknown User'} - {self.name or 'Unnamed Course'}"
@@ -182,3 +183,9 @@ class TermsCondition(models.Model):
 
 class PrivacyPolicy(models.Model):
     text = models.TextField(blank=True, null=True)
+
+
+
+ 
+    
+      

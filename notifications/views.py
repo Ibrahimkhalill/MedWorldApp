@@ -12,6 +12,8 @@ from django.utils.timezone import now
 from rest_framework.response import Response
 from django.http import JsonResponse 
 
+from .models import OneTimeNotification
+from .serializers import OneTimeNotificationSerializer
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
@@ -117,7 +119,6 @@ def save_fcm_token(request):
         try:
            
             token = request.data.get("expo_token")
-            print("token",token)
             user_id = request.user
            
 
@@ -147,6 +148,8 @@ def send_visible_notifications():
         for notification in notifications:
             # Get the user's FCM tokens
             tokens = FirebaseToken.objects.filter(user=notification.user).values_list("token", flat=True)
+            
+            print("tokens", tokens)
 
             # Send notification to each token
             for token in tokens:
@@ -162,4 +165,21 @@ def send_visible_notifications():
             notification.save()
             
             print("notification is send", tokens)
-    print("check notification")
+
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_one_time_notification(request):
+    user = request.user
+    notification = OneTimeNotification.objects.filter(user=user, is_read=False).first()
+    
+    if notification:
+        # Mark as read after sending
+        notification.is_read = True
+        notification.save()
+        serializer = OneTimeNotificationSerializer(notification)
+        return Response(serializer.data)
+    else:
+        return Response({"message": "No new notifications."})

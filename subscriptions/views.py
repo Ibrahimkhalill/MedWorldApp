@@ -21,7 +21,7 @@ from datetime import datetime
 stripe.api_key = "sk_test_51QRTfHALRymUd61pnuUKrQxQMdEbZu7K5By0gbsyVHyR0BYQbryEq7PbSwycaGPURUBa29HGzf6SArPRzM19cH0B004mfG89ye"
 
 # Webhook secret (get this from your Stripe Dashboard)
-endpoint_secret = 'whsec_211c66fa5205c7c0a438eb4d3552b3bfb9ca4014e7cd308ad7928c5f8ad02e7c'
+endpoint_secret = "whsec_SZ27Tlw4uDOd5rJGRR5WIQdJwByAgZCR"
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
@@ -50,7 +50,7 @@ def create_or_retrieve_customer(request):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def create_checkout_session(request):
-    DOMAIN = "https://e418-115-127-156-9.ngrok-free.app"  # Replace with your actual domain
+    DOMAIN = "https://medworld.duckdns.org"  # Replace with your actual domain
     # price_id = request.data.get("price_id")  # Stripe price ID
 
     # if not price_id:

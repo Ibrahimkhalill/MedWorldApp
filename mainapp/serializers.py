@@ -42,7 +42,7 @@ class CourseSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     class Meta:
         model = Course
-        fields = ['id', 'user', 'date', 'name']
+        fields = ['id', 'user', 'date', 'name', 'location']
 
 class PercantageSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)

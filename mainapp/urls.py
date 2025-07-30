@@ -4,6 +4,7 @@ from .views import *
 from subscriptions.views import *
 from authentications.views import *
 from notifications.views import *
+from .googleExcel import export_to_google_sheets
 urlpatterns = [
   
    path("api/login/", login),
@@ -20,7 +21,7 @@ urlpatterns = [
    path("api/user_profile/",user_profile),
    path("api/export/surgery_to_excel/", export_surgery_to_excel),
    path("api/export/surgery_to_pdf/", export_surgery_to_pdf),
-   path("api/export/surgery_to_google_sheets/", export_surgery_to_google_sheets),
+   path("api/export/surgery_to_google_sheets/", export_to_google_sheets),
    # Surgery endpoints
     path('api/surgery-names-list/', get_surgery_names, name='surgery-name-list'),  # For listing and creating surgeries
     path('api/surgery/', surgery_view, name='surgery-list'),  # For listing and creating surgeries
@@ -66,6 +67,10 @@ urlpatterns = [
     path('api/terms-condition/<int:pk>/', terms_condition_api, name='terms_condition_detail'),
     path('api/privacy-policy/', privacy_policy_api, name='privacy_policy_list'),
     path('api/privacy-policy/<int:pk>/', privacy_policy_api, name='privacy_policy_detail'),
+    
+    
+    
+    path('api/one-time-notification/', get_one_time_notification),
    
 ]
 
