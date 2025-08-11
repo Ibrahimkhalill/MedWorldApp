@@ -96,6 +96,8 @@ class Budget(models.Model):
     travel_fee = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     accommodation_expense = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     total_fee = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    location = models.TextField( blank=True, null=True)
+
 
     def __str__(self):
         return f"{self.user.get_full_name() if self.user else 'Unknown User'} - {self.category or 'Unnamed Budget'}"
@@ -172,6 +174,10 @@ class Subscription(models.Model):
             return "Subscription expired"
 
         return "Active"
+    
+    
+    def __str__(self):
+        return self.user.username
     
     
     
