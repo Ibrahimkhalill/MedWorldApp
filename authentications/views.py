@@ -24,6 +24,9 @@ from django.utils.timezone import now
 from datetime import timedelta
 from django.db import transaction
 from .otpGenarate import generate_otp
+from django.db import IntegrityError 
+from django.db.models import ProtectedError
+
 
 from background_task import background
 # Create your views here.

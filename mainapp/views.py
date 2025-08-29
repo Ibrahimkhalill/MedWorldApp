@@ -181,7 +181,7 @@ def surgery_view(request, pk=None):
         else:
             print(serializer.errors)  # Log the errors for debugging
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
     if request.method == 'PUT':
         try:
@@ -207,16 +207,25 @@ def surgery_view(request, pk=None):
 
 
 def schedule_notification_db(surgery):
-    notification_date = now() + timedelta(days=90)  # 3 months from now
-    Notification.objects.create(
-        user=surgery.user,
-        title="Surgery Follow-Up Reminder",
-        message=f"Reminder to follow up on the surgery '{surgery.name_of_surgery or 'Unnamed Surgery'}' performed on {surgery.date.date()}. Check the histology and complications.",
-        data={"surgery_id": surgery.id},
-        visible_at=notification_date,
-    )
+    # Histology notification (60 days later)
+    if surgery.histology:
+        Notification.objects.create(
+            user=surgery.user,
+            title="Histology Reminder",
+            message=f"Please follow up on the histology results for the surgery '{surgery.name_of_surgery or 'Unnamed Surgery'}' performed on {surgery.date.date()}.",
+            data={"surgery_id": surgery.id, "type": "histology"},
+            visible_at=now() + timedelta(days=60),  # 2 months later
+        )
 
-
+    # Complications notification (90 days later)
+    if surgery.complications:
+        Notification.objects.create(
+            user=surgery.user,
+            title="Complications Follow-Up Reminder",
+            message=f"Please check for complications related to the surgery '{surgery.name_of_surgery or 'Unnamed Surgery'}' performed on {surgery.date.date()}.",
+            data={"surgery_id": surgery.id, "type": "complications"},
+            visible_at=now() + timedelta(days=90),  # 3 months later
+        )
 
     
     
