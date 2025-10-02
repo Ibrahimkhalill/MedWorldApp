@@ -179,7 +179,7 @@ EMAIL_HOST = 'smtp.hostinger.com'
 EMAIL_PORT = 587  # Or use 465 if using SSL
 EMAIL_USE_TLS = True  # Use TLS for security
 EMAIL_HOST_USER = 'medworld@medworld.online'  # Your email address
-EMAIL_HOST_PASSWORD = 'aloneIbr@him516'  # Your email password
+EMAIL_HOST_PASSWORD = '&qQYBzUv2j%B$F#'  # Your email password
 DEFAULT_FROM_EMAIL = 'medworld@medworld.online'  # Default from address
 
 GOOGLE_SHEET_CREDS_JSON = "729859196271-iaj8ikvst39t6s4vppa5kfme3ohnifo1.apps.googleusercontent.com"

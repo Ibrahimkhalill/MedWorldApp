@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework.response import Response
+from django.http import HttpResponse, FileResponse, JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -705,7 +706,7 @@ def send_support_email(request):
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 
-    return JsonReResponsesponse({"error": "Invalid request method."}, status=405)
+    return JsonResponse({"error": "Invalid request method."}, status=405)
 
 
 

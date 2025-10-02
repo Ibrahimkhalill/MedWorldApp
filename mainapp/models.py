@@ -124,10 +124,66 @@ class PercantageSurgery(models.Model):
     total_surgery = models.IntegerField(blank=True, null=True)
     
 
+# class Subscription(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="subscription")
+#     stripe_customer_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
+#     stripe_subscription_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
+#     is_active = models.BooleanField(default=False)
+#     free_trial = models.BooleanField(default=True)
+#     free_trial_end = models.DateTimeField(null=True, blank=True)
+#     start_date = models.DateTimeField(null=True, blank=True)
+#     end_date = models.DateTimeField(null=True, blank=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     def deactivate(self):
+#         """Deactivate subscription or free trial."""
+#         self.is_active = False
+#         self.free_trial = False
+#         self.save()
+
+#     def activate_free_trial(self, duration_days=30):
+#         """Activate free trial for a specific duration."""
+#         now = timezone.now()  # Use timezone-aware datetime
+#         print(f"Current time: {now}")
+#         self.free_trial = True
+#         self.free_trial_end = now + timedelta(days=duration_days)
+#         print(f"Free trial end date: {self.free_trial_end}")
+#         self.save()
+        
+#     def activate_subscription(self, duration_days=30):
+#         """Activate subscription for a specific duration."""
+#         now = timezone.now()  # Use timezone-aware datetime
+#         self.is_active = True
+#         self.start_date = now
+#         self.end_date = now + timedelta(days=duration_days)
+#         self.save()
+
+#     def check_status(self):
+#         """Check if free trial or subscription has expired."""
+#         now = timezone.now()  # Use timezone-aware datetime
+        
+#         # Check free trial status
+#         if self.free_trial and self.free_trial_end and now >= self.free_trial_end:
+#             self.deactivate()
+#             return "Free trial expired"
+
+#         # Check subscription status
+#         if self.is_active and self.end_date and now >= self.end_date:
+#             self.deactivate()
+#             return "Subscription expired"
+
+#         return "Active"
+    
+    
+#     def __str__(self):
+#         return self.user.username
+    
+
 class Subscription(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="subscription")
-    stripe_customer_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    stripe_subscription_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
+    app_user_id = models.CharField(max_length=255, unique=True, null=True, blank=True)  # RevenueCat app_user_id
+    status = models.CharField(max_length=50, null=True, blank=True)  # active / canceled / past_due / unpaid
     is_active = models.BooleanField(default=False)
     free_trial = models.BooleanField(default=True)
     free_trial_end = models.DateTimeField(null=True, blank=True)
@@ -144,16 +200,14 @@ class Subscription(models.Model):
 
     def activate_free_trial(self, duration_days=30):
         """Activate free trial for a specific duration."""
-        now = timezone.now()  # Use timezone-aware datetime
-        print(f"Current time: {now}")
+        now = timezone.now()
         self.free_trial = True
         self.free_trial_end = now + timedelta(days=duration_days)
-        print(f"Free trial end date: {self.free_trial_end}")
         self.save()
         
     def activate_subscription(self, duration_days=30):
         """Activate subscription for a specific duration."""
-        now = timezone.now()  # Use timezone-aware datetime
+        now = timezone.now()
         self.is_active = True
         self.start_date = now
         self.end_date = now + timedelta(days=duration_days)
@@ -161,25 +215,38 @@ class Subscription(models.Model):
 
     def check_status(self):
         """Check if free trial or subscription has expired."""
-        now = timezone.now()  # Use timezone-aware datetime
-        
-        # Check free trial status
+        now = timezone.now()
         if self.free_trial and self.free_trial_end and now >= self.free_trial_end:
             self.deactivate()
             return "Free trial expired"
 
-        # Check subscription status
         if self.is_active and self.end_date and now >= self.end_date:
             self.deactivate()
             return "Subscription expired"
 
         return "Active"
     
-    
     def __str__(self):
         return self.user.username
-    
-    
+
+
+class PaymentHistory(models.Model):
+    subscription = models.ForeignKey(Subscription, on_delete=models.CASCADE, related_name="payment_history")
+    transaction_id = models.CharField(max_length=255, null=True, blank=True)  # RevenueCat transaction id
+    product_id = models.CharField(max_length=255, null=True, blank=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    currency = models.CharField(max_length=10, null=True, blank=True)
+    purchase_date = models.DateTimeField(null=True, blank=True)
+    expiration_date = models.DateTimeField(null=True, blank=True)
+    event_type = models.CharField(max_length=50, null=True, blank=True)  # first_time / renewal / cancel
+    platform = models.CharField(max_length=50, null=True, blank=True)  # iOS / Android
+    environment = models.CharField(max_length=50, null=True, blank=True)  # SANDBOX / PRODUCTION
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return f"{self.subscription.user.username} - {self.product_id} - {self.purchase_date}"
+
     
     
 class TermsCondition(models.Model):

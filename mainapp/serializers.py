@@ -2,8 +2,6 @@ from rest_framework import serializers
 from .models import *
 from django.contrib.auth.models import User
 
-
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -68,16 +66,15 @@ class NotificationSerializer(serializers.ModelSerializer):
         
         
 class SubscriptionSerializer(serializers.ModelSerializer):
-    user_profile = UserProfileSerializer(source='user.userprofile', read_only=True)  # Access related UserProfile
+    user_profile = UserProfileSerializer(source='user.userprofile', read_only=True)
 
     class Meta:
         model = Subscription
         fields = [
             'id',
             'user',
+            'app_user_id',
             'user_profile',  # Include the UserProfile data here
-            'stripe_customer_id',
-            'stripe_subscription_id',
             'is_active',
             'free_trial',
             'free_trial_end',
@@ -88,12 +85,9 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['created_at', 'updated_at']
 
-        
+
 class CheckEmailSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True, allow_blank=False)
-    
-    
-    
     
 class TermsConditionSeriaLizer(serializers.ModelSerializer):
     class Meta:

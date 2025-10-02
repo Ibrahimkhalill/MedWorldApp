@@ -47,12 +47,9 @@ urlpatterns = [
     path('api/notifications/<int:pk>/sound-played/', mark_sound_played, name='unread-sound-notification'),
     path('api/save-expo-token/', save_fcm_token, name='save_fcm_token'),
     
-    path('api/create_or_retrieve_customer/', create_or_retrieve_customer, name='create_or_retrieve_customer'),
-    path('api/payment-sheet/', payment_sheet, name='payment_sheet'),
-    path('api/create-checkout-session/', create_checkout_session, name='create_checkout_session'),
     path('api/checkout/success/', checkout_success, name='checkout_success'),
     path('api/checkout/cancel/', checkout_cencel, name='checkout_cencel'),
-    path('webhook/',stripe_webhook, name='webhook'),
+    path('webhook/',revenuecat_webhook, name='webhook'),
     path('api/get_subscription/',get_subscription, name='get_subscription'),
     path('api/get_all_subscription/',get_all_subscription),
     
@@ -67,8 +64,6 @@ urlpatterns = [
     path('api/terms-condition/<int:pk>/', terms_condition_api, name='terms_condition_detail'),
     path('api/privacy-policy/', privacy_policy_api, name='privacy_policy_list'),
     path('api/privacy-policy/<int:pk>/', privacy_policy_api, name='privacy_policy_detail'),
-    
-    
     
     path('api/one-time-notification/', get_one_time_notification),
    

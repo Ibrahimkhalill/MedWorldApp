@@ -167,8 +167,6 @@ def send_visible_notifications():
             print("notification is send", tokens)
 
 
-
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_one_time_notification(request):
