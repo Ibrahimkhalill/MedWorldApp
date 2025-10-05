@@ -8,4 +8,4 @@ class NotificationsConfig(AppConfig):
     def ready(self):
         from .scheduler import start_scheduler
        
-        start_scheduler()
+        # start_scheduler()

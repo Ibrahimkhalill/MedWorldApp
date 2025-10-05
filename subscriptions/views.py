@@ -57,14 +57,23 @@ def revenuecat_webhook(request):
             subscription.start_date = start_date or subscription.start_date
             subscription.end_date = end_date or subscription.end_date
             subscription.save()
-            
-            Notification.objects.create(
-            user=user,
-            title="Subscription Activated",
-            message=f"Your subscription to {entitlement_id} is now active.",
-            data ={"url": "Subscriptions"},
-            visible_at=now(), 
-        )
+            if event_type == "INITIAL_PURCHASE":
+                Notification.objects.create(
+                user=user,
+                title="Subscription Activated",
+                message=f"Your subscription to {entitlement_id} is now active.",
+                data ={"url": "Subscriptions"},
+                visible_at=now(), 
+                )
+            elif event_type == "RENEWAL":
+                Notification.objects.create(
+                user=user,
+                title="Subscription Renewed",
+                message=f"Your subscription to {entitlement_id} has been renewed.",
+                data ={"url": "Subscriptions"},
+                visible_at=now(),
+                
+              )
             print("Subscription activated for user:", user.username)
         elif event_type in ["CANCELLATION", "EXPIRED"]:
             subscription.is_active = False
@@ -72,8 +81,8 @@ def revenuecat_webhook(request):
             print("Subscription deactivated for user:", user.username)
             Notification.objects.create(
             user=user,
-            title="Subscription Expired",
-            message=f"Your subscription to {entitlement_id} has expired.",
+            title=f"Subscription {str(event_type).lower()}",
+            message=f"Your subscription to {entitlement_id} has {str(event_type).lower()}.",
             data ={"url": "Subscriptions"},
             visible_at=now(),
         )

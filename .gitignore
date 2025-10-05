@@ -7,3 +7,6 @@ __pycache__/
 venv310/
 .env
 *.dbsecrets/credentials.json
+*celerybeat-schedule*
+myprojectenv/
+secrets/

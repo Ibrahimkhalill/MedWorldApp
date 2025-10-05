@@ -143,7 +143,7 @@ from .utils import send_firebase_notification  # Import the function from utils
 def send_visible_notifications():
     # Fetch all notifications that are visible and not sent
     now_time = now()
-    notifications = Notification.objects.filter(is_read=False, is_sound_played=False, visible_at__lte=now_time )
+    notifications = Notification.objects.filter(is_read=False, is_sound_played=False, visible_at__lte=now_time)
     if notifications: 
         for notification in notifications:
             # Get the user's FCM tokens

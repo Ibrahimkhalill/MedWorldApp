@@ -15,6 +15,7 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+from celery.schedules import crontab
 
 
 # Quick-start development settings - unsuitable for production
@@ -94,6 +95,23 @@ TEMPLATES = [
         },
     },
 ]
+
+
+# Celery settings
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # or your Redis instance URL
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BEAT_SCHEDULE = {}
+
+CELERY_BEAT_SCHEDULE = {
+    'send-notifications-every-10-seconds': {
+        'task': 'notifications.tasks.send_visible_notifications',
+        'schedule': 10.0,  # every 10 seconds
+    },
+    'check-subscriptions-every-minute': {
+        'task': 'subscriptions.tasks.check_subscription_status_task',
+        'schedule': 60.0,  # every 60 seconds
+    },
+}
 
 WSGI_APPLICATION = 'medworld.wsgi.application'
 
